@@ -43,8 +43,9 @@ namespace Controller
             {
                 IParticipant participant = Participants[i];
 
-                participant.Equipiment.Quality = (int)new Random(DateTime.Now.Millisecond).NextInt64();
-                participant.Equipiment.Performance = (int)new Random(DateTime.Now.Millisecond).NextInt64();
+                Random _random = new Random(DateTime.Now.Millisecond);
+                participant.Equipment.Quality = (int)_random.NextInt64();
+                participant.Equipment.Performance = (int)_random.NextInt64();
 
                 Participants[i] = participant;
             }

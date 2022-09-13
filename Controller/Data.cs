@@ -19,7 +19,7 @@ namespace Controller
             AddTracks();
         }
 
-        public static void AddParticipants()
+        private static void AddParticipants()
         {
             Competition.Participants.Add(new Driver("Driver A", 10, new Car(10, 10, 10, false), TeamColors.Red));
             Competition.Participants.Add(new Driver("Driver B", 10, new Car(10, 10, 10, false), TeamColors.Green));
@@ -27,7 +27,7 @@ namespace Controller
             Competition.Participants.Add(new Driver("Driver D", 10, new Car(10, 10, 10, false), TeamColors.Yellow));
         }
 
-        public static void AddTracks()
+        private static void AddTracks()
         {
             SectionTypes[] track1 = { SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner };
             Competition.Tracks.Enqueue(new Track("Track 1", track1));
@@ -40,7 +40,6 @@ namespace Controller
             if(nextTrack == null)
             {
                 SectionTypes[] trackDefault = { SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner };
-
                 nextTrack = new Track("Track Default", trackDefault);
             }
 

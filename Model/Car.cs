@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Car : IEquipiment
+    public class Car : IEquipment
     {
         public int Quality { get; set; }
         public int Performance { get; set; }
