@@ -29,19 +29,37 @@ namespace Controller
 
         private static void AddTracks()
         {
-            SectionTypes[] track1 = { 
-                SectionTypes.StartGrid, 
+            SectionTypes[] track1 = {
+                SectionTypes.StartGrid,
+                SectionTypes.StartGrid,
+                SectionTypes.StartGrid,
                 SectionTypes.Finish, 
                 SectionTypes.Straight, 
                 SectionTypes.Straight, 
-                SectionTypes.RightCorner, 
-                SectionTypes.RightCorner, 
-                SectionTypes.Straight, 
-                SectionTypes.Straight, 
-                SectionTypes.Straight, 
-                SectionTypes.Straight, 
-                SectionTypes.RightCorner, 
-                SectionTypes.RightCorner 
+                SectionTypes.LeftCorner, 
+                SectionTypes.Straight,
+                SectionTypes.RightCorner,
+                SectionTypes.RightCorner,
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.RightCorner,
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.RightCorner,
+                SectionTypes.LeftCorner, 
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.LeftCorner,
+                SectionTypes.RightCorner,
+                SectionTypes.Straight,
+                SectionTypes.RightCorner,
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.RightCorner,
+
+
             };
             Competition.Tracks.Enqueue(new Track("Track 1", track1));
         }

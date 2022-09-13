@@ -1,15 +1,18 @@
 ﻿using Controller;
+using RaceSim;
 
 // See https://aka.ms/new-console-template for more information
 //Console.WriteLine("Hello, World!");
 
+Console.ReadLine();
+
 Data.Initialize();
 Data.NextRace();
+Visualisation.Initialize(Data.CurrentRace);
+Visualisation.DrawTrack();
+Visualisation.PlaceParticipants();
 
-Console.WriteLine($"Current Track: {Data.CurrentRace.Track.Name}");
-Console.WriteLine($"Current Race: {Data.CurrentRace}");
-
-//for (; ; )
-//{
-//    Thread.Sleep(100);
-//}
+for (; ; )
+{
+    Thread.Sleep(100);
+}
