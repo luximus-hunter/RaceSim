@@ -29,7 +29,20 @@ namespace Controller
 
         private static void AddTracks()
         {
-            SectionTypes[] track1 = { SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner };
+            SectionTypes[] track1 = { 
+                SectionTypes.StartGrid, 
+                SectionTypes.Finish, 
+                SectionTypes.Straight, 
+                SectionTypes.Straight, 
+                SectionTypes.RightCorner, 
+                SectionTypes.RightCorner, 
+                SectionTypes.Straight, 
+                SectionTypes.Straight, 
+                SectionTypes.Straight, 
+                SectionTypes.Straight, 
+                SectionTypes.RightCorner, 
+                SectionTypes.RightCorner 
+            };
             Competition.Tracks.Enqueue(new Track("Track 1", track1));
         }
 
@@ -39,7 +52,16 @@ namespace Controller
 
             if(nextTrack == null)
             {
-                SectionTypes[] trackDefault = { SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner };
+                SectionTypes[] trackDefault = { 
+                    SectionTypes.StartGrid, 
+                    SectionTypes.Finish, 
+                    SectionTypes.RightCorner, 
+                    SectionTypes.RightCorner, 
+                    SectionTypes.Straight, 
+                    SectionTypes.Straight, 
+                    SectionTypes.RightCorner, 
+                    SectionTypes.RightCorner 
+                };
                 nextTrack = new Track("Track Default", trackDefault);
             }
 
