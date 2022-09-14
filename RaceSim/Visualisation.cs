@@ -107,30 +107,77 @@ namespace RaceSim
 
         private static int _tileSize;
         private static Canvas _canvas;
-        private static int _maxX;
-        private static int _maxY;
         private static Direction _direction;
         private static Race _currentRace;
 
         public static void Initialize(Race race)
         {
             _currentRace = race;
-
             _tileSize = _startHorizontal.Length; // assuming height == width
             _direction = Direction.Right;
-
-            int canvasHeight = 40;
-            _canvas = new Canvas(canvasHeight * 2, canvasHeight);
-
-            _maxX = (canvasHeight * 2) / _tileSize;
-            _maxY = canvasHeight / _tileSize;
         }
 
         public static void DrawTrack()
         {
+            // start pos
             int x = 3;
             int y = 3;
 
+            // init min max values
+            int xMax = x;
+            int yMax = y;
+            int xMin = x;
+            int yMin = y;
+            
+            // find out grid size (in tiles)
+            foreach (Section section in _currentRace.Track.Sections)
+            {
+                SimulateSection(section, x, y);
+
+                switch (_direction)
+                {
+                    case Direction.Up:
+                        y--;
+                        break;
+                    case Direction.Left:
+                        x--;
+                        break;
+                    case Direction.Down:
+                        y++;
+                        break;
+                    case Direction.Right:
+                        x++;
+                        break;
+                }
+
+                if (x > xMax)
+                {
+                    xMax = x;
+                }
+                if (y > yMax)
+                {
+                    yMax = y;
+                }
+                if (x < xMin)
+                {
+                    xMin = x;
+                }
+                if (y < yMin)
+                {
+                    yMin = y;
+                }
+            }
+
+            int xSize = xMax - xMin + 1;
+            int ySize = yMax - yMin + 1;
+
+            // create canvas ft correct size, reset direction & set start position
+            _canvas = new Canvas(xSize * _tileSize, ySize * _tileSize);
+            _direction = Direction.Right;
+            x = 3 - xMin;
+            y = 3 - yMin;
+
+            // draw background
             for (int i = 0; i < _canvas.Height; i++)
             {
                 for (int j = 0; j < _canvas.Width; j++)
@@ -139,6 +186,7 @@ namespace RaceSim
                 }
             }
 
+            // draw all tiles
             foreach (Section section in _currentRace.Track.Sections)
             {
                 DrawSection(section, x, y);
@@ -160,19 +208,56 @@ namespace RaceSim
                 }
             }
 
+            // draw the canvas
             _canvas.Scale = false;
-
             AnsiConsole.Write(_canvas);
+        }
+
+        public static void SimulateSection(Section section, int x, int y)
+        {
+            switch (section.SectionType)
+            {
+                case SectionTypes.LeftCorner:
+                    if (_direction == Direction.Up)
+                    {
+                        _direction = Direction.Left;
+                    }
+                    else if (_direction == Direction.Left)
+                    {
+                        _direction = Direction.Down;
+                    }
+                    else if (_direction == Direction.Down)
+                    {
+                        _direction = Direction.Right;
+                    }
+                    else if (_direction == Direction.Right)
+                    {
+                        _direction = Direction.Up;
+                    }
+                    break;
+                case SectionTypes.RightCorner:
+                    if (_direction == Direction.Up)
+                    {
+                        _direction = Direction.Right;
+                    }
+                    else if (_direction == Direction.Left)
+                    {
+                        _direction = Direction.Up;
+                    }
+                    else if (_direction == Direction.Down)
+                    {
+                        _direction = Direction.Left;
+                    }
+                    else if (_direction == Direction.Right)
+                    {
+                        _direction = Direction.Down;
+                    }
+                    break;
+            }
         }
 
         public static void DrawSection(Section section, int x, int y)
         {
-            if (x > _maxX || y > _maxY)
-            {
-                Console.WriteLine("Section out of bounds");
-                return;
-            }
-
             string[] tile = { };
 
             #region tile selector
