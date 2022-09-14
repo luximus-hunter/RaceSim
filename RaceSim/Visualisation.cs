@@ -172,7 +172,7 @@ namespace RaceSim
             int ySize = yMax - yMin + 1;
 
             // create canvas ft correct size, reset direction & set start position
-            _canvas = new Canvas(xSize * _tileSize, ySize * _tileSize);
+            _canvas = new Canvas(xSize * _tileSize + 2, ySize * _tileSize + 2);
             _direction = Direction.Right;
             x = 3 - xMin;
             y = 3 - yMin;
@@ -182,6 +182,8 @@ namespace RaceSim
             {
                 for (int j = 0; j < _canvas.Width; j++)
                 {
+                    int r = new Random().Next();
+                    
                     _canvas.SetPixel(j, i, Color.Green);
                 }
             }
@@ -356,27 +358,28 @@ namespace RaceSim
 
                     switch (c)
                     {
+                        // walls
                         case '-':
                         case '|':
                         case '/':
                         case '\\':
                             color = Color.White;
                             break;
+                        // finish line
                         case '#':
                             color = Color.Teal;
                             break;
+                        // start position
                         case '@':
                             color = ConsoleColor.DarkGray;
                             break;
-                        case 'c':
-                            color = Color.Yellow;
-                            break;
+                        // road
                         default:
                             color = Color.Black;
                             break;
                     }
 
-                    _canvas.SetPixel(x * _tileSize + j, y * _tileSize + i, color);
+                    _canvas.SetPixel(x * _tileSize + j + 1, y * _tileSize + i + 1, color);
                 }
             }
         }
@@ -387,13 +390,15 @@ namespace RaceSim
             {
                 if (section.SectionType == SectionTypes.StartGrid)
                 {
-                    Console.WriteLine("startline");
+                    // Console.WriteLine("startline");
+                    
+                    
                 }
             }
         }
     }
 
-    public enum Direction
+    enum Direction
     {
         Up,
         Left,
