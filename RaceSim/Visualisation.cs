@@ -128,7 +128,7 @@ namespace RaceSim
         {
             _currentRace = race;
 
-            _tileSize = _startHorizontal.Length; // asuming height == width
+            _tileSize = _startHorizontal.Length; // assuming height == width
             _direction = Direction.Right;
 
             int canvasHeight = 40;
@@ -147,7 +147,7 @@ namespace RaceSim
             {
                 for (int j = 0; j < _canvas.Width; j++)
                 {
-                    _canvas.SetPixel(j, i, Color.DarkGreen);
+                    _canvas.SetPixel(j, i, Color.Green);
                 }
             }
 
@@ -289,6 +289,9 @@ namespace RaceSim
                             break;
                         case '@':
                             color = ConsoleColor.DarkGray;
+                            break;
+                        case 'c':
+                            color = Color.Yellow;
                             break;
                         default:
                             color = Color.Black;
