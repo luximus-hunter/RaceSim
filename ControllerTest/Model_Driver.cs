@@ -8,7 +8,6 @@ namespace ControllerTest
         [SetUp]
         public void SetUp()
         {
-            
         }
 
         [Test]
@@ -25,7 +24,7 @@ namespace ControllerTest
         {
             Car c = new Car(10, 20, 30, false);
             Driver d = new Driver("Driver A", 100, c, TeamColors.Red);
-            
+
             d.Name = "Driver B";
             d.TeamColor = TeamColors.Blue;
 

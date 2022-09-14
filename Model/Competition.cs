@@ -8,8 +8,8 @@ namespace Model
 {
     public class Competition
     {
-        public List<IParticipant> Participants;
-        public Queue<Track> Tracks;
+        public List<IParticipant> Participants { get; }
+        public Queue<Track> Tracks { get; }
 
         public Competition()
         {
@@ -22,7 +22,7 @@ namespace Model
             if (Tracks.Count > 0)
             {
                 return Tracks.Dequeue();
-            } 
+            }
             else
             {
                 return null;

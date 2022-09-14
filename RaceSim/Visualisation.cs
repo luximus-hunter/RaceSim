@@ -13,7 +13,7 @@ namespace RaceSim
     {
         #region graphics
 
-        private static string[] _startHorizontal =
+        private static readonly string[] _startHorizontal =
         {
             "-----",
             "   @ ",
@@ -22,7 +22,7 @@ namespace RaceSim
             "-----",
         };
 
-        private static string[] _startVertical =
+        private static readonly string[] _startVertical =
         {
             "|   |",
             "|@  |",
@@ -31,7 +31,7 @@ namespace RaceSim
             "|   |",
         };
 
-        private static string[] _finishHorizontal =
+        private static readonly string[] _finishHorizontal =
         {
             "-----",
             "  #  ",
@@ -40,7 +40,7 @@ namespace RaceSim
             "-----",
         };
 
-        private static string[] _finishVertical =
+        private static readonly string[] _finishVertical =
         {
             "|   |",
             "|   |",
@@ -49,7 +49,7 @@ namespace RaceSim
             "|   |",
         };
 
-        private static string[] _straightHorizontal =
+        private static readonly string[] _straightHorizontal =
         {
             "-----",
             "  c  ",
@@ -58,7 +58,7 @@ namespace RaceSim
             "-----",
         };
 
-        private static string[] _straightVertical =
+        private static readonly string[] _straightVertical =
         {
             "|   |",
             "|   |",
@@ -67,22 +67,16 @@ namespace RaceSim
             "|   |",
         };
 
-        /// <summary>
-        /// Corner ft. opening on Left & Down
-        /// </summary>
-        private static string[] _cornerLD =
+        private static readonly string[] _cornerLD =
         {
             @"----\",
-             "   c|",
-             "    |",
-             " c  |",
+            "   c|",
+            "    |",
+            " c  |",
             @"\   |"
         };
 
-        /// <summary>
-        /// Corner ft. opening on Left & Up
-        /// </summary>
-        private static string[] _cornerLU =
+        private static readonly string[] _cornerLU =
         {
             "/   |",
             " c  |",
@@ -91,10 +85,7 @@ namespace RaceSim
             "----/",
         };
 
-        /// <summary>
-        /// Corner ft. opening on Right & Down
-        /// </summary>
-        private static string[] _cornerRD =
+        private static readonly string[] _cornerRD =
         {
             "/----",
             "|c   ",
@@ -103,21 +94,18 @@ namespace RaceSim
             "|   /",
         };
 
-        /// <summary>
-        /// Corner ft. opening on Right & Up
-        /// </summary>
-        private static string[] _cornerRU =
+        private static readonly string[] _cornerRU =
         {
             @"|   \",
-             "|  c ",
-             "|    ",
-             "|c   ",
+            "|  c ",
+            "|    ",
+            "|c   ",
             @"\----",
         };
 
         #endregion
 
-        private static int _tileSize; 
+        private static int _tileSize;
         private static Canvas _canvas;
         private static int _maxX;
         private static int _maxY;
@@ -154,8 +142,8 @@ namespace RaceSim
             foreach (Section section in _currentRace.Track.Sections)
             {
                 DrawSection(section, x, y);
-                
-                switch(_direction)
+
+                switch (_direction)
                 {
                     case Direction.Up:
                         y--;
@@ -179,7 +167,7 @@ namespace RaceSim
 
         public static void DrawSection(Section section, int x, int y)
         {
-            if(x > _maxX || y > _maxY)
+            if (x > _maxX || y > _maxY)
             {
                 Console.WriteLine("Section out of bounds");
                 return;
@@ -192,7 +180,7 @@ namespace RaceSim
             switch (section.SectionType)
             {
                 case SectionTypes.Straight:
-                    if(_direction == Direction.Left || _direction == Direction.Right)
+                    if (_direction == Direction.Left || _direction == Direction.Right)
                     {
                         tile = _straightHorizontal;
                     }
@@ -200,6 +188,7 @@ namespace RaceSim
                     {
                         tile = _straightVertical;
                     }
+
                     break;
                 case SectionTypes.LeftCorner:
                     if (_direction == Direction.Up)
@@ -222,6 +211,7 @@ namespace RaceSim
                         tile = _cornerLU;
                         _direction = Direction.Up;
                     }
+
                     break;
                 case SectionTypes.RightCorner:
                     if (_direction == Direction.Up)
@@ -244,6 +234,7 @@ namespace RaceSim
                         tile = _cornerLD;
                         _direction = Direction.Down;
                     }
+
                     break;
                 case SectionTypes.StartGrid:
                     if (_direction == Direction.Left || _direction == Direction.Right)
@@ -254,6 +245,7 @@ namespace RaceSim
                     {
                         tile = _startVertical;
                     }
+
                     break;
                 case SectionTypes.Finish:
                     if (_direction == Direction.Left || _direction == Direction.Right)
@@ -264,6 +256,7 @@ namespace RaceSim
                     {
                         tile = _finishVertical;
                     }
+
                     break;
             }
 
@@ -276,7 +269,7 @@ namespace RaceSim
                     char c = tile[i][j];
                     Color color;
 
-                    switch(c)
+                    switch (c)
                     {
                         case '-':
                         case '|':

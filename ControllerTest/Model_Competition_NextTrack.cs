@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ControllerTest
 {
     [TestFixture]
-    public class Model_Competition_NextTrackShould
+    public class Model_Competition_NextTrack
     {
         private Competition _competition;
 
@@ -28,7 +28,11 @@ namespace ControllerTest
         [Test]
         public void NextTrack_OneInQueue_ReturnTrack()
         {
-            SectionTypes[] t = { SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner };
+            SectionTypes[] t =
+            {
+                SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
+                SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
+            };
             Track track = new Track("Track 1", t);
 
             _competition.Tracks.Enqueue(track);
@@ -41,7 +45,11 @@ namespace ControllerTest
         [Test]
         public void NextTrack_OneInQueue_RemoveTrackFromQueue()
         {
-            SectionTypes[] t = { SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner };
+            SectionTypes[] t =
+            {
+                SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
+                SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
+            };
             Track track = new Track("Track 1", t);
 
             _competition.Tracks.Enqueue(track);
@@ -55,7 +63,11 @@ namespace ControllerTest
         [Test]
         public void NextTrack_TwoInQueue_ReturnNextTrack()
         {
-            SectionTypes[] t = { SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner, SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner };
+            SectionTypes[] t =
+            {
+                SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
+                SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
+            };
             Track track1 = new Track("Track 1", t);
             Track track2 = new Track("Track 2", t);
 

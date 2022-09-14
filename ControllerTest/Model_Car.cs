@@ -8,7 +8,6 @@ namespace ControllerTest
         [SetUp]
         public void SetUp()
         {
-            
         }
 
         [Test]
@@ -23,7 +22,7 @@ namespace ControllerTest
         public void Car_Modify()
         {
             Car c = new Car(10, 20, 30, false);
-            
+
             c.Performance = 200;
             c.IsBroken = true;
 

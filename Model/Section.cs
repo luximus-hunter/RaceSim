@@ -8,7 +8,7 @@ namespace Model
 {
     public class Section
     {
-        public SectionTypes SectionType;
+        public SectionTypes SectionType { get; private set; }
 
         public Section(SectionTypes sectionType)
         {

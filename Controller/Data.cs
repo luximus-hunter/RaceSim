@@ -9,8 +9,8 @@ namespace Controller
 {
     public static class Data
     {
-        public static Competition Competition;
-        public static Race CurrentRace; 
+        private static Competition Competition { get; set; }
+        public static Race CurrentRace { get; private set; }
 
         public static void Initialize()
         {
@@ -29,14 +29,15 @@ namespace Controller
 
         private static void AddTracks()
         {
-            SectionTypes[] track1 = {
+            Competition.Tracks.Enqueue(new Track("Track 1", new[]
+            {
                 SectionTypes.StartGrid,
                 SectionTypes.StartGrid,
                 SectionTypes.StartGrid,
-                SectionTypes.Finish, 
-                SectionTypes.Straight, 
-                SectionTypes.Straight, 
-                SectionTypes.LeftCorner, 
+                SectionTypes.Finish,
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.LeftCorner,
                 SectionTypes.Straight,
                 SectionTypes.RightCorner,
                 SectionTypes.RightCorner,
@@ -48,7 +49,7 @@ namespace Controller
                 SectionTypes.Straight,
                 SectionTypes.Straight,
                 SectionTypes.RightCorner,
-                SectionTypes.LeftCorner, 
+                SectionTypes.LeftCorner,
                 SectionTypes.Straight,
                 SectionTypes.Straight,
                 SectionTypes.LeftCorner,
@@ -58,30 +59,22 @@ namespace Controller
                 SectionTypes.Straight,
                 SectionTypes.Straight,
                 SectionTypes.RightCorner,
-
-
-            };
-            Competition.Tracks.Enqueue(new Track("Track 1", track1));
+            }));
         }
 
         public static void NextRace()
         {
-            Track nextTrack = Competition.NextTrack();
-
-            if(nextTrack == null)
+            Track nextTrack = Competition.NextTrack() ?? new Track("Track Default", new[]
             {
-                SectionTypes[] trackDefault = { 
-                    SectionTypes.StartGrid, 
-                    SectionTypes.Finish, 
-                    SectionTypes.RightCorner, 
-                    SectionTypes.RightCorner, 
-                    SectionTypes.Straight, 
-                    SectionTypes.Straight, 
-                    SectionTypes.RightCorner, 
-                    SectionTypes.RightCorner 
-                };
-                nextTrack = new Track("Track Default", trackDefault);
-            }
+                SectionTypes.StartGrid,
+                SectionTypes.Finish,
+                SectionTypes.RightCorner,
+                SectionTypes.RightCorner,
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.RightCorner,
+                SectionTypes.RightCorner
+            });
 
             CurrentRace = new Race(nextTrack, Competition.Participants);
         }
