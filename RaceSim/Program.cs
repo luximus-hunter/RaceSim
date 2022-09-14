@@ -14,7 +14,7 @@ Data.NextRace();
 // Aftekenen 4...
 Visualisation.Initialize(Data.CurrentRace);
 Visualisation.DrawTrack();
-// Visualisation.PlaceParticipants();
+Visualisation.PlaceParticipants();
 
 for (;;)
 {
