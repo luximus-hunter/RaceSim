@@ -7,14 +7,19 @@ Console.Clear();
 
 Data.Initialize();
 Data.NextRace();
+Data.NextRace();
+
+Data.CurrentRace.DriversChanged += Visualisation.DriversChangedEventHandler;
 
 // Aftekenen 2.6 
 // Console.WriteLine(Data.CurrentRace.Track.Name);
 
 // Aftekenen 4...
 Visualisation.Initialize(Data.CurrentRace);
-Visualisation.DrawTrack();
 Visualisation.PlaceParticipants();
+Visualisation.DrawTrack();
+
+Data.CurrentRace.Start();
 
 for (;;)
 {

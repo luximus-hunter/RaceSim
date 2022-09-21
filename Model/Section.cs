@@ -8,6 +8,7 @@ namespace Model
 {
     public class Section
     {
+        public static int SectionLength { get; } = 100;
         public SectionTypes SectionType { get; private set; }
 
         public Section(SectionTypes sectionType)

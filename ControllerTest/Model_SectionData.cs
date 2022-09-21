@@ -19,7 +19,11 @@ namespace ControllerTest
             Driver d1 = new Driver("Driver A", 100, c1, TeamColors.Red);
             Driver d2 = new Driver("Driver B", 100, c2, TeamColors.Blue);
 
-            SectionData sd = new SectionData(d1, 1, d2, 2);
+            SectionData sd = new SectionData();
+            sd.Left = d1;
+            sd.DistanceLeft = 1;
+            sd.Right = d2;
+            sd.DistanceRight = 2;
 
             Assert.That(sd.Left == d1 && sd.DistanceLeft == 1 && sd.Right == d2 && sd.DistanceRight == 2);
         }
@@ -33,7 +37,11 @@ namespace ControllerTest
             Driver d1 = new Driver("Driver A", 100, c1, TeamColors.Red);
             Driver d2 = new Driver("Driver B", 100, c2, TeamColors.Blue);
 
-            SectionData sd = new SectionData(d1, 1, d2, 2);
+            SectionData sd = new SectionData();
+            sd.Left = d1;
+            sd.DistanceLeft = 1;
+            sd.Right = d2;
+            sd.DistanceRight = 2;
 
             Car c3 = new Car(10, 20, 3000, false);
             Driver d3 = new Driver("Driver C", 100, c3, TeamColors.Yellow);

@@ -16,10 +16,21 @@ namespace Model
 
     public enum TeamColors
     {
-        Red,
-        Green,
+        White,
+        Orange,
+        Magenta,
+        Sky,
         Yellow,
+        Lime,
+        Pink,
         Grey,
-        Blue
+        Silver,
+        Cyan,
+        Purple,
+        Blue,
+        Brown,
+        Green,
+        Red,
+        Black
     }
 }
