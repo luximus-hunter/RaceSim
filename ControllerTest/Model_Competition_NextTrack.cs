@@ -1,9 +1,5 @@
 ﻿using Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Spectre.Console;
 
 namespace ControllerTest
 {
@@ -33,13 +29,13 @@ namespace ControllerTest
                 SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
                 SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
             };
-            Track track = new Track("Track 1", t);
+            Track track = new Track("Track 1", 1, Direction.Right, Color.Green, t);
 
             _competition.Tracks.Enqueue(track);
 
             Track result = _competition.NextTrack();
 
-            Assert.AreEqual(track, result);
+            Assert.That(result, Is.EqualTo(track));
         }
 
         [Test]
@@ -50,7 +46,7 @@ namespace ControllerTest
                 SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
                 SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
             };
-            Track track = new Track("Track 1", t);
+            Track track = new Track("Track 1", 1, Direction.Right, Color.Green, t);
 
             _competition.Tracks.Enqueue(track);
 
@@ -68,19 +64,19 @@ namespace ControllerTest
                 SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
                 SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
             };
-            Track track1 = new Track("Track 1", t);
-            Track track2 = new Track("Track 2", t);
+            Track track1 = new Track("Track 1", 1, Direction.Right, Color.Green, t);
+            Track track2 = new Track("Track 2", 1, Direction.Right, Color.Green, t);
 
             _competition.Tracks.Enqueue(track1);
             _competition.Tracks.Enqueue(track2);
 
             Track result = _competition.NextTrack();
 
-            Assert.AreEqual(result.Name, track1.Name);
+            Assert.That(track1.Name, Is.EqualTo(result.Name));
 
             result = _competition.NextTrack();
 
-            Assert.AreEqual(result.Name, track2.Name);
+            Assert.That(track2.Name, Is.EqualTo(result.Name));
         }
     }
 }

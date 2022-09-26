@@ -1,5 +1,6 @@
 using Controller;
 using Model;
+using Spectre.Console;
 
 namespace ControllerTest
 {
@@ -13,7 +14,7 @@ namespace ControllerTest
         public void SetUp()
         {
             _c = new Competition();
-            _t = new Track("Track Smoll", new[]
+            _t = new Track("Track Smoll", 5, Direction.Down, Color.Green, new[]
             {
                 SectionTypes.StartGrid,
                 SectionTypes.Finish,

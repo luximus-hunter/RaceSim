@@ -7,7 +7,7 @@ Console.Clear();
 
 Data.Initialize();
 Data.NextRace();
-Data.NextRace();
+// Data.NextRace();
 
 Data.CurrentRace.DriversChanged += Visualisation.DriversChangedEventHandler;
 
@@ -23,5 +23,6 @@ Data.CurrentRace.Start();
 
 for (;;)
 {
-    Thread.Sleep(100);
+    // Visualisation.DrawTrack();
+    // Thread.Sleep(500);
 }

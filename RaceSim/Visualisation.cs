@@ -1,11 +1,6 @@
 ﻿using Controller;
 using Model;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RaceSim
 {
@@ -20,103 +15,9 @@ namespace RaceSim
 
         #endregion
 
-        #region graphics old
-
-        // private static readonly string[] _startHorizontal =
-        // {
-        //     "-----",
-        //     "   1 ",
-        //     "     ",
-        //     " 2   ",
-        //     "-----",
-        // };
-        //
-        // private static readonly string[] _startVertical =
-        // {
-        //     "|   |",
-        //     "|1  |",
-        //     "|   |",
-        //     "|  2|",
-        //     "|   |",
-        // };
-        //
-        // private static readonly string[] _finishHorizontal =
-        // {
-        //     "-----",
-        //     "  #1 ",
-        //     "  #  ",
-        //     " 2#  ",
-        //     "-----",
-        // };
-        //
-        // private static readonly string[] _finishVertical =
-        // {
-        //     "|   |",
-        //     "|1  |",
-        //     "|###|",
-        //     "|  2|",
-        //     "|   |",
-        // };
-        //
-        // private static readonly string[] _straightHorizontal =
-        // {
-        //     "-----",
-        //     "  1  ",
-        //     "     ",
-        //     "  2  ",
-        //     "-----",
-        // };
-        //
-        // private static readonly string[] _straightVertical =
-        // {
-        //     "|   |",
-        //     "|   |",
-        //     "|1 2|",
-        //     "|   |",
-        //     "|   |",
-        // };
-        //
-        // private static readonly string[] _cornerLD =
-        // {
-        //     @"----\",
-        //     "    |",
-        //     "  1 |",
-        //     " 2  |",
-        //     @"\   |"
-        // };
-        //
-        // private static readonly string[] _cornerLU =
-        // {
-        //     "/   |",
-        //     " 1  |",
-        //     "  2 |",
-        //     "    |",
-        //     "----/",
-        // };
-        //
-        // private static readonly string[] _cornerRD =
-        // {
-        //     "/----",
-        //     "|    ",
-        //     "| 1  ",
-        //     "|  2 ",
-        //     "|   /",
-        // };
-        //
-        // private static readonly string[] _cornerRU =
-        // {
-        //     @"|   \",
-        //     "|  1 ",
-        //     "| 2  ",
-        //     "|    ",
-        //     @"\----",
-        // };
-
-        #endregion
-
         #region graphics
 
-        private static readonly string[] _startHorizontal =
+        private static readonly string[] StartRight =
         {
             "------",
             "      ",
@@ -126,7 +27,17 @@ namespace RaceSim
             "------",
         };
 
-        private static readonly string[] _startVertical =
+        private static readonly string[] StartLeft =
+        {
+            "------",
+            "      ",
+            "    2 ",
+            " 1    ",
+            "      ",
+            "------",
+        };
+
+        private static readonly string[] StartDown =
         {
             "|    |",
             "| 1  |",
@@ -136,47 +47,97 @@ namespace RaceSim
             "|    |",
         };
 
-        private static readonly string[] _finishHorizontal =
+        private static readonly string[] StartUp =
         {
-            "as----",
-            "sa    ",
-            "as  1 ",
-            "sa 2  ",
-            "as    ",
-            "sa----",
-        };
-
-        private static readonly string[] _finishVertical =
-        {
-            "swswsw",
-            "wswsws",
             "|    |",
             "| 2  |",
+            "|    |",
+            "|    |",
             "|  1 |",
             "|    |",
         };
 
-        private static readonly string[] _straightHorizontal =
+        private static readonly string[] FinishRight =
+        {
+            "----as",
+            "    sa",
+            "   1as",
+            " 2  sa",
+            "    as",
+            "----sa",
+        };
+
+        private static readonly string[] FinishLeft =
+        {
+            "as----",
+            "sa    ",
+            "as  2 ",
+            "sa1   ",
+            "as    ",
+            "sa----",
+        };
+
+        private static readonly string[] FinishDown =
+        {
+            "swswsw",
+            "wswsws",
+            "|    |",
+            "| 21 |",
+            "|    |",
+            "|    |",
+        };
+
+        private static readonly string[] FinishUp =
+        {
+            "swswsw",
+            "wswsws",
+            "|    |",
+            "| 21 |",
+            "|    |",
+            "|    |",
+        };
+
+        private static readonly string[] StraightRight =
         {
             "------",
             "      ",
-            "   1  ",
-            "  2   ",
+            "    1 ",
+            " 2    ",
             "      ",
             "------",
         };
 
-        private static readonly string[] _straightVertical =
+        private static readonly string[] StraightLeft =
+        {
+            "------",
+            "      ",
+            "    2 ",
+            " 1    ",
+            "      ",
+            "------",
+        };
+
+        private static readonly string[] StraightDown =
         {
             "|    |",
+            "| 2  |",
             "|    |",
-            "| 12 |",
             "|    |",
-            "|    |",
+            "|  1 |",
             "|    |",
         };
 
-        private static readonly string[] _cornerRD =
+        private static readonly string[] StraightUp =
+        {
+            "|    |",
+            "| 1  |",
+            "|    |",
+            "|    |",
+            "|  2 |",
+            "|    |",
+        };
+
+        private static readonly string[] CornerRd =
         {
             "/.-.-.",
             ".     ",
@@ -186,10 +147,10 @@ namespace RaceSim
             ".    /"
         };
 
-        private static readonly string[] _cornerRU = _cornerRD.Reverse().ToArray();
+        private static readonly string[] CornerRu = CornerRd.Reverse().ToArray();
 
-        private static string[] _cornerLU = new string[_cornerRD.Length];
-        private static string[] _cornerLD = new string[_cornerRD.Length];
+        private static readonly string[] CornerLu = new string[CornerRd.Length];
+        private static readonly string[] CornerLd = new string[CornerRd.Length];
 
         #endregion
 
@@ -201,37 +162,45 @@ namespace RaceSim
         public static void Initialize(Race race)
         {
             _currentRace = race;
-            _tileSize = _startHorizontal.Length; // assuming height == width
-            _direction = Direction.Right;
+            _direction = _currentRace.Track.StartDirection;
 
-            _cornerRD.CopyTo(_cornerLD, 0);
-            _cornerRU.CopyTo(_cornerLU, 0);
-
-            for (int i = 0; i < _cornerRD.Length; i++)
+            if (!CheckSquareTiles())
             {
-                _cornerLD[i] = new String(_cornerRD[i].ToCharArray().Reverse().ToArray());
-                _cornerLU[i] = new String(_cornerRU[i].ToCharArray().Reverse().ToArray());
+                throw new Exception("A tile in the tile-set wasn't a square");
             }
 
-            foreach (var line in _cornerRD)
+            _tileSize = StartLeft.Length;
+
+            // prep corner tiles
+            CornerRd.CopyTo(CornerLd, 0);
+            CornerRu.CopyTo(CornerLu, 0);
+
+            for (int i = 0; i < CornerRd.Length; i++)
             {
-                Console.WriteLine(line);
+                CornerLd[i] = new String(CornerRd[i].ToCharArray().Reverse().ToArray());
+                CornerLu[i] = new String(CornerRu[i].ToCharArray().Reverse().ToArray());
             }
-            
-            foreach (var line in _cornerRU)
+        }
+
+        private static bool CheckSquareTiles()
+        {
+            string[][] tiles = {
+                StraightUp, StraightDown, StraightLeft, StraightRight, StartUp, StartDown, StartLeft, StartRight,
+                FinishUp, FinishDown, FinishLeft, FinishRight, CornerRd
+            };
+
+            foreach (string[] tile in tiles)
             {
-                Console.WriteLine(line);
+                foreach (string line in tile)
+                {
+                    if (tile.Length != line.Length)
+                    {
+                        return false;
+                    }
+                }
             }
 
-            foreach (var line in _cornerLU)
-            {
-                Console.WriteLine(line);
-            }
-
-            foreach (var line in _cornerLD)
-            {
-                Console.WriteLine(line);
-            }
+            return true;
         }
 
         public static void DrawTrack()
@@ -249,7 +218,7 @@ namespace RaceSim
             // find out grid size (in tiles)
             foreach (Section section in _currentRace.Track.Sections)
             {
-                SimulateSection(section, x, y);
+                SimulateSection(section);
 
                 switch (_direction)
                 {
@@ -291,9 +260,10 @@ namespace RaceSim
             int xSize = xMax - xMin + 1;
             int ySize = yMax - yMin + 1;
 
-            // create canvas ft correct size, reset direction & set start position
-            _canvas = new Canvas(xSize * _tileSize + 2, ySize * _tileSize + 2);
-            _direction = Direction.Right;
+            // create canvas with correct size, reset direction & set start position
+            _canvas = new Canvas(xSize * _tileSize + _currentRace.Track.Padding * 2,
+                ySize * _tileSize + _currentRace.Track.Padding * 2);
+            _direction = _currentRace.Track.StartDirection;
             x = 3 - xMin;
             y = 3 - yMin;
 
@@ -302,9 +272,7 @@ namespace RaceSim
             {
                 for (int j = 0; j < _canvas.Width; j++)
                 {
-                    int r = new Random().Next();
-
-                    _canvas.SetPixel(j, i, Color.Green);
+                    _canvas.SetPixel(j, i, _currentRace.Track.Background);
                 }
             }
 
@@ -336,7 +304,7 @@ namespace RaceSim
             AnsiConsole.Write(_canvas);
         }
 
-        public static void SimulateSection(Section section, int x, int y)
+        private static void SimulateSection(Section section)
         {
             switch (section.SectionType)
             {
@@ -381,44 +349,52 @@ namespace RaceSim
             }
         }
 
-        public static void DrawSection(Section section, int x, int y)
+        private static void DrawSection(Section section, int x, int y)
         {
-            string[] tile = { };
+            string[] tile = new string[_tileSize];
 
             #region tile selector
 
             switch (section.SectionType)
             {
                 case SectionTypes.Straight:
-                    if (_direction == Direction.Left || _direction == Direction.Right)
+                    if (_direction == Direction.Up)
                     {
-                        tile = _straightHorizontal;
+                        tile = StraightUp;
                     }
-                    else
+                    else if (_direction == Direction.Left)
                     {
-                        tile = _straightVertical;
+                        tile = StraightLeft;
+                    }
+                    else if (_direction == Direction.Down)
+                    {
+                        tile = StraightDown;
+                    }
+                    else if (_direction == Direction.Right)
+                    {
+                        tile = StraightRight;
                     }
 
                     break;
                 case SectionTypes.LeftCorner:
                     if (_direction == Direction.Up)
                     {
-                        tile = _cornerLD;
+                        tile = CornerLd;
                         _direction = Direction.Left;
                     }
                     else if (_direction == Direction.Left)
                     {
-                        tile = _cornerRD;
+                        tile = CornerRd;
                         _direction = Direction.Down;
                     }
                     else if (_direction == Direction.Down)
                     {
-                        tile = _cornerRU;
+                        tile = CornerRu;
                         _direction = Direction.Right;
                     }
                     else if (_direction == Direction.Right)
                     {
-                        tile = _cornerLU;
+                        tile = CornerLu;
                         _direction = Direction.Up;
                     }
 
@@ -426,45 +402,61 @@ namespace RaceSim
                 case SectionTypes.RightCorner:
                     if (_direction == Direction.Up)
                     {
-                        tile = _cornerRD;
+                        tile = CornerRd;
                         _direction = Direction.Right;
                     }
                     else if (_direction == Direction.Left)
                     {
-                        tile = _cornerRU;
+                        tile = CornerRu;
                         _direction = Direction.Up;
                     }
                     else if (_direction == Direction.Down)
                     {
-                        tile = _cornerLU;
+                        tile = CornerLu;
                         _direction = Direction.Left;
                     }
                     else if (_direction == Direction.Right)
                     {
-                        tile = _cornerLD;
+                        tile = CornerLd;
                         _direction = Direction.Down;
                     }
 
                     break;
                 case SectionTypes.StartGrid:
-                    if (_direction == Direction.Left || _direction == Direction.Right)
+                    if (_direction == Direction.Up)
                     {
-                        tile = _startHorizontal;
+                        tile = StartUp;
                     }
-                    else
+                    else if (_direction == Direction.Left)
                     {
-                        tile = _startVertical;
+                        tile = StartLeft;
+                    }
+                    else if (_direction == Direction.Down)
+                    {
+                        tile = StartDown;
+                    }
+                    else if (_direction == Direction.Right)
+                    {
+                        tile = StartRight;
                     }
 
                     break;
                 case SectionTypes.Finish:
-                    if (_direction == Direction.Left || _direction == Direction.Right)
+                    if (_direction == Direction.Up)
                     {
-                        tile = _finishHorizontal;
+                        tile = FinishUp;
                     }
-                    else
+                    else if (_direction == Direction.Left)
                     {
-                        tile = _finishVertical;
+                        tile = FinishLeft;
+                    }
+                    else if (_direction == Direction.Down)
+                    {
+                        tile = FinishDown;
+                    }
+                    else if (_direction == Direction.Right)
+                    {
+                        tile = FinishRight;
                     }
 
                     break;
@@ -472,15 +464,8 @@ namespace RaceSim
 
             #endregion
 
-            if (_currentRace.Positions[section].Left != null && _currentRace.Positions[section].Right != null)
-            {
-                tile = InsertParticipantsInGraphic(tile, _currentRace.Positions[section].Left,
-                    _currentRace.Positions[section].Right);
-            }
-            else if (_currentRace.Positions[section].Left != null)
-            {
-                tile = InsertParticipantsInGraphic(tile, _currentRace.Positions[section].Left, null);
-            }
+            tile = InsertParticipantsInGraphic(tile, _currentRace.Positions[section].Left,
+                _currentRace.Positions[section].Right);
 
             for (int i = 0; i < tile.Length; i++)
             {
@@ -566,7 +551,8 @@ namespace RaceSim
 
                     if (c != 'x')
                     {
-                        _canvas.SetPixel(x * _tileSize + j + 1, y * _tileSize + i + 1, color);
+                        _canvas.SetPixel(x * _tileSize + j + _currentRace.Track.Padding,
+                            y * _tileSize + i + _currentRace.Track.Padding, color);
                     }
                 }
             }
@@ -593,7 +579,8 @@ namespace RaceSim
                 throw new Exception("No start positions");
             }
 
-            // ASSUMING STARTS ARE IN THE BEGINNING
+            // TODO: throw error when start tiles are not in the beginning
+            // TODO: throw error when start tiles are somewhere else
 
             int driversToPlace = _currentRace.Participants.Count;
             int driversPlaced = 0;
@@ -618,7 +605,7 @@ namespace RaceSim
             }
         }
 
-        public static string[] InsertParticipantsInGraphic(string[] t, IParticipant p1, IParticipant p2)
+        private static string[] InsertParticipantsInGraphic(string[] t, IParticipant p1, IParticipant p2)
         {
             string[] tile = new string[t.Length];
 
@@ -644,7 +631,7 @@ namespace RaceSim
             return tile;
         }
 
-        public static char TeamColorToChar(TeamColors tc)
+        private static char TeamColorToChar(TeamColors tc)
         {
             switch (tc)
             {
@@ -684,13 +671,5 @@ namespace RaceSim
                     return ' ';
             }
         }
-    }
-
-    enum Direction
-    {
-        Up,
-        Left,
-        Down,
-        Right
     }
 }

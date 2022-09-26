@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Spectre.Console;
 
 namespace Model
 {
@@ -10,10 +6,16 @@ namespace Model
     {
         public string Name { get; }
         public LinkedList<Section> Sections { get; }
+        public int Padding { get; }
+        public Direction StartDirection { get; }
+        public Color Background { get; }
 
-        public Track(string name, SectionTypes[] sections)
+        public Track(string name, int padding, Direction startDirection, Color background, SectionTypes[] sections)
         {
             Name = name;
+            Padding = padding;
+            StartDirection = startDirection;
+            Background = background;
             Sections = new LinkedList<Section>();
 
             foreach (SectionTypes sectionType in sections)
@@ -21,5 +23,13 @@ namespace Model
                 Sections.AddLast(new Section(sectionType));
             }
         }
+    }
+
+    public enum Direction
+    {
+        Up,
+        Left,
+        Down,
+        Right
     }
 }

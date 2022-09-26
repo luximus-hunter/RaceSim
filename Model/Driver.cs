@@ -20,5 +20,9 @@ namespace Model
             Equipment = equipment;
             TeamColor = teamColor;
         }
+
+        public Driver(Driver driver) : this(driver.Name, driver.Points, new Car((Car)driver.Equipment), driver.TeamColor)
+        {
+        }
     }
 }

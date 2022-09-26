@@ -12,6 +12,11 @@ namespace Model
         public int Performance { get; set; }
         public int Speed { get; set; }
         public bool IsBroken { get; set; }
+        
+        public int Distance()
+        {
+            return Speed * Performance;
+        }
 
         public Car(int quality, int performance, int speed, bool isBroken)
         {
@@ -19,6 +24,10 @@ namespace Model
             Performance = performance;
             Speed = speed;
             IsBroken = isBroken;
+        }
+
+        public Car(Car car) : this(car.Quality, car.Performance, car.Speed, car.IsBroken)
+        {
         }
     }
 }

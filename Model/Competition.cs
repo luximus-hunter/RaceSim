@@ -17,7 +17,7 @@ namespace Model
             Tracks = new Queue<Track>();
         }
 
-        public Track NextTrack()
+        public Track? NextTrack()
         {
             if (Tracks.Count > 0)
             {
