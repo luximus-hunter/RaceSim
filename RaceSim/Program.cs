@@ -1,35 +1,37 @@
 ﻿using Controller;
 using RaceSim;
+using System;
 
-// Console.WriteLine("Maximize the console. Press Enter when done.");
-// Console.ReadLine();
-// Console.Clear();
+namespace RaceSim;
 
-Data.Initialize();
-Data.NextRace();
-
-Data.CurrentRace.DriversChanged += Visualisation.DriversChangedEventHandler;
-Data.CurrentRace.RaceEnded += delegate
+internal static class Program
 {
-    Data.NextRace();
-    
-    Visualisation.Initialize();
-    Visualisation.PlaceParticipants();
-    Visualisation.DrawTrack();
+    private static void Main()
+    {
+        Data.Initialize();
+        Data.NextRace();
+        Visualisation.Initialize();
 
-    Data.CurrentRace.RandomizeEquipment();
-    // Data.CurrentRace.Start();
-};
+        Data.CurrentRace.DriversChanged += Visualisation.DriversChangedEventHandler;
+        Data.CurrentRace.RaceEnded += RaceEndedEventHandler;
 
-Visualisation.Initialize();
-Visualisation.PlaceParticipants();
-Visualisation.DrawTrack();
+        while (Data.CurrentRace.Participants.Count > 0)
+        {
+            for (;;)
+            {
+                // Visualisation.DrawTrack();
+                // Thread.Sleep(500);
+            }
+        }
 
-Data.CurrentRace.RandomizeEquipment();
-Data.CurrentRace.Start();
+        return;
+    }
 
-for (;;)
-{
-    // Visualisation.DrawTrack();
-    // Thread.Sleep(500);
+    private static void RaceEndedEventHandler(object sender, EventArgs eventArgs)
+    {
+        Data.NextRace();
+        Data.CurrentRace.DriversChanged += Visualisation.DriversChangedEventHandler;
+        Data.CurrentRace.RaceEnded += RaceEndedEventHandler;
+        Visualisation.Initialize();
+    }
 }

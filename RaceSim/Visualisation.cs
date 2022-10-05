@@ -311,7 +311,7 @@ public static class Visualisation
 
         Table screen = new();
         screen.RoundedBorder();
-        screen.AddColumn(Data.CurrentRace.Track.Name);
+        screen.AddColumn($"Track: {Data.CurrentRace.Track.Name} | Laps: {Data.CurrentRace.Track.Laps}");
         screen.AddRow(_canvas);
 
         #endregion
@@ -580,76 +580,6 @@ public static class Visualisation
                 if (c != 'x')
                 {
                     _canvas.SetPixel(relX, relY, color);
-                }
-            }
-        }
-    }
-
-    public static void PlaceParticipants()
-    {
-        int startGrids = 0;
-        bool startGridsAtStart = false;
-        bool startGridsMidTrack = false;
-        foreach (Section section in Data.CurrentRace.Track.Sections.Reverse())
-        {
-            if (section.SectionType == SectionTypes.StartGrid)
-            {
-                startGrids++;
-                startGridsAtStart = true;
-            }
-            else
-            {
-                if (startGridsAtStart)
-                {
-                    startGridsMidTrack = true;
-                }
-
-                startGridsAtStart = false;
-            }
-        }
-
-        #region validation
-
-        if (startGrids < 1)
-        {
-            throw new Exception("No start positions");
-        }
-
-        if (!startGridsAtStart)
-        {
-            throw new Exception("Start positions are not at the start of the track");
-        }
-
-        if (startGridsMidTrack)
-        {
-            throw new Exception("Start positions were found in the middle of the track");
-        }
-
-        if (Data.CurrentRace.Participants.Count > startGrids * 2)
-        {
-            throw new Exception("Too many drivers for track");
-        }
-
-        #endregion
-
-        int driversToPlace = Data.CurrentRace.Participants.Count;
-        int driversPlaced = 0;
-
-        for (int index = startGrids - 1; index >= 0; index--)
-        {
-            if (driversToPlace > 0)
-            {
-                Data.CurrentRace.Positions[Data.CurrentRace.Track.Sections.ElementAt(index)].Left =
-                    Data.CurrentRace.Participants[driversPlaced];
-                driversPlaced++;
-                driversToPlace--;
-
-                if (driversToPlace > 0)
-                {
-                    Data.CurrentRace.Positions[Data.CurrentRace.Track.Sections.ElementAt(index)].Right =
-                        Data.CurrentRace.Participants[driversPlaced];
-                    driversPlaced++;
-                    driversToPlace--;
                 }
             }
         }

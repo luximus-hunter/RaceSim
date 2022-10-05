@@ -10,24 +10,26 @@ public class Race
     public List<IParticipant> Participants { get; }
     public Dictionary<Section, SectionData> Positions { get; }
 
-    private Timer _timer;
+    public Timer Timer;
     private readonly Random _random;
-    private Dictionary<IParticipant, int> _roundsCompleted;
+    private readonly Dictionary<IParticipant, int> _roundsCompleted;
+    private bool _loadingNextTrack;
 
-    public EventHandler<DriversChangedEventArgs> DriversChanged;
-    public EventHandler<RaceEndedEventArgs> RaceEnded;
+    public event EventHandler<DriversChangedEventArgs> DriversChanged;
+    public event EventHandler<EventArgs> RaceEnded;
 
     public Race(Track track, List<IParticipant> participants)
     {
         Track = track;
         Participants = participants;
 
+        Timer = new Timer(200);
+        Timer.Elapsed += OnTimedEvent;
+        Timer.AutoReset = true;
+
         _random = new Random(DateTime.Now.Millisecond);
         _roundsCompleted = new Dictionary<IParticipant, int>();
-        
-        _timer = new Timer(200);
-        _timer.Elapsed += OnTimedEvent;
-        _timer.AutoReset = true;
+        _loadingNextTrack = false;
 
         Positions = new Dictionary<Section, SectionData>();
         foreach (Section section in track.Sections)
@@ -63,6 +65,74 @@ public class Race
         }
     }
 
+    public void PlaceParticipants()
+    {
+        int startGrids = 0;
+        bool startGridsAtStart = false;
+        bool startGridsMidTrack = false;
+        foreach (Section section in Track.Sections.Reverse())
+        {
+            if (section.SectionType == SectionTypes.StartGrid)
+            {
+                startGrids++;
+                startGridsAtStart = true;
+            }
+            else
+            {
+                if (startGridsAtStart)
+                {
+                    startGridsMidTrack = true;
+                }
+
+                startGridsAtStart = false;
+            }
+        }
+
+        #region validation
+
+        if (startGrids < 1)
+        {
+            throw new Exception("No start positions");
+        }
+
+        if (!startGridsAtStart)
+        {
+            throw new Exception("Start positions are not at the start of the track");
+        }
+
+        if (startGridsMidTrack)
+        {
+            throw new Exception("Start positions were found in the middle of the track");
+        }
+
+        if (Data.CurrentRace.Participants.Count > startGrids * 2)
+        {
+            throw new Exception("Too many drivers for track");
+        }
+
+        #endregion
+
+        int driversToPlace = Participants.Count;
+        int driversPlaced = 0;
+
+        for (int index = startGrids - 1; index >= 0; index--)
+        {
+            if (driversToPlace > 0)
+            {
+                Positions[Track.Sections.ElementAt(index)].Left = Participants[driversPlaced];
+                driversPlaced++;
+                driversToPlace--;
+
+                if (driversToPlace > 0)
+                {
+                    Positions[Track.Sections.ElementAt(index)].Right = Participants[driversPlaced];
+                    driversPlaced++;
+                    driversToPlace--;
+                }
+            }
+        }
+    }
+
     private void OnTimedEvent(object source, ElapsedEventArgs e)
     {
         bool render = false;
@@ -89,7 +159,7 @@ public class Race
             if (sectionData.Left != null)
             {
                 // int driverCode = sectionData.Left.GetHashCode();
-                
+
                 // add driven distance
                 int passedDistance = sectionData.Left.Equipment.Distance();
                 sectionData.DistanceLeft += passedDistance;
@@ -119,9 +189,10 @@ public class Race
                                 _roundsCompleted.Add(sectionData.Left, 0);
                             }
                         }
-                        
+
                         // remove from track when finished
-                        if (_roundsCompleted.ContainsKey(sectionData.Left) && _roundsCompleted[sectionData.Left] == Track.Laps)
+                        if (_roundsCompleted.ContainsKey(sectionData.Left) &&
+                            _roundsCompleted[sectionData.Left] == Track.Laps)
                         {
                             sectionData.Left = null;
                         }
@@ -155,7 +226,8 @@ public class Race
                         }
 
                         // remove from track when finished
-                        if (_roundsCompleted.ContainsKey(sectionData.Left) && _roundsCompleted[sectionData.Left] == Track.Laps)
+                        if (_roundsCompleted.ContainsKey(sectionData.Left) &&
+                            _roundsCompleted[sectionData.Left] == Track.Laps)
                         {
                             sectionData.Left = null;
                         }
@@ -186,7 +258,7 @@ public class Race
             else if (sectionData.Right != null)
             {
                 // int driverCode = sectionData.Right.GetHashCode();
-                
+
                 // add driven distance
                 int passedDistance = sectionData.Right.Equipment.Distance();
                 sectionData.DistanceRight += passedDistance;
@@ -216,9 +288,10 @@ public class Race
                                 _roundsCompleted.Add(sectionData.Right, 0);
                             }
                         }
-                        
+
                         // remove from track when finished
-                        if (_roundsCompleted.ContainsKey(sectionData.Right) && _roundsCompleted[sectionData.Right] == Track.Laps)
+                        if (_roundsCompleted.ContainsKey(sectionData.Right) &&
+                            _roundsCompleted[sectionData.Right] == Track.Laps)
                         {
                             sectionData.Right = null;
                         }
@@ -250,9 +323,10 @@ public class Race
                                 _roundsCompleted.Add(sectionData.Right, 0);
                             }
                         }
-                        
+
                         // remove from track when finished
-                        if (_roundsCompleted.ContainsKey(sectionData.Right) && _roundsCompleted[sectionData.Right] == Track.Laps)
+                        if (_roundsCompleted.ContainsKey(sectionData.Right) &&
+                            _roundsCompleted[sectionData.Right] == Track.Laps)
                         {
                             sectionData.Right = null;
                         }
@@ -286,10 +360,10 @@ public class Race
         {
             DriversChanged.Invoke(this, new DriversChangedEventArgs(Track));
         }
-        
+
         // TODO: fix this ⬇ garbage, it works for now...
         bool nextTrack = true;
-        
+
         for (int i = 0; i < Track.Laps; i++)
         {
             if (_roundsCompleted.ContainsValue(i))
@@ -303,15 +377,22 @@ public class Race
             nextTrack = false;
         }
 
-        if (nextTrack)
+        if (nextTrack && _loadingNextTrack == false)
         {
-            RaceEnded.Invoke(this, new RaceEndedEventArgs());
+            _loadingNextTrack = true;
+            RaceEnded.Invoke(this, EventArgs.Empty);
         }
         // TODO: end of ⬆ that garbage
     }
 
     public void Start()
     {
-        _timer.Start();
+        Timer.Start();
+    }
+
+    public void Stop()
+    {
+        Timer.Stop();
+        DriversChanged = null;
     }
 }
