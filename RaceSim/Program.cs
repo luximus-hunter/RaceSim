@@ -1,24 +1,31 @@
 ﻿using Controller;
 using RaceSim;
 
-Console.WriteLine("Maximize the console. Press Enter when done.");
-Console.ReadLine();
-Console.Clear();
+// Console.WriteLine("Maximize the console. Press Enter when done.");
+// Console.ReadLine();
+// Console.Clear();
 
 Data.Initialize();
 Data.NextRace();
-// Data.NextRace();
 
 Data.CurrentRace.DriversChanged += Visualisation.DriversChangedEventHandler;
+Data.CurrentRace.RaceEnded += delegate
+{
+    Data.NextRace();
+    
+    Visualisation.Initialize();
+    Visualisation.PlaceParticipants();
+    Visualisation.DrawTrack();
 
-// Aftekenen 2.6 
-// Console.WriteLine(Data.CurrentRace.Track.Name);
+    Data.CurrentRace.RandomizeEquipment();
+    // Data.CurrentRace.Start();
+};
 
-// Aftekenen 4...
-Visualisation.Initialize(Data.CurrentRace);
+Visualisation.Initialize();
 Visualisation.PlaceParticipants();
 Visualisation.DrawTrack();
 
+Data.CurrentRace.RandomizeEquipment();
 Data.CurrentRace.Start();
 
 for (;;)

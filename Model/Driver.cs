@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Model;
 
-namespace Model
+public class Driver : IParticipant
 {
-    public class Driver : IParticipant
+    public string Name { get; set; }
+    public int Points { get; set; }
+    public IEquipment Equipment { get; set; }
+    public TeamColors TeamColor { get; set; }
+    public int Section { get; set; }
+
+    public Driver(string name, IEquipment equipment, TeamColors teamColor)
     {
-        public string Name { get; set; }
-        public int Points { get; set; }
-        public IEquipment Equipment { get; set; }
-        public TeamColors TeamColor { get; set; }
+        Name = name;
+        Points = 0;
+        Section = 0;
+        Equipment = equipment;
+        TeamColor = teamColor;
+    }
 
-        public Driver(string name, int points, IEquipment equipment, TeamColors teamColor)
-        {
-            Name = name;
-            Points = points;
-            Equipment = equipment;
-            TeamColor = teamColor;
-        }
-
-        public Driver(Driver driver) : this(driver.Name, driver.Points, new Car((Car)driver.Equipment), driver.TeamColor)
-        {
-        }
+    public void AddPoint()
+    {
+        Points++;
     }
 }

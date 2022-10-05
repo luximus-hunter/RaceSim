@@ -2,100 +2,118 @@
 using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace Controller
+namespace Controller;
+
+public class Race
 {
-    public class Race
+    public Track Track { get; }
+    public List<IParticipant> Participants { get; }
+    public Dictionary<Section, SectionData> Positions { get; }
+    private Timer _timer;
+    private int _finishedParticipants;
+    private readonly Random _random;
+
+    public EventHandler<DriversChangedEventArgs> DriversChanged;
+    public EventHandler<RaceEndedEventArgs> RaceEnded;
+
+    public Race(Track track, List<IParticipant> participants)
     {
-        public Track Track { get; }
-        public List<IParticipant> Participants { get; set; }
-        private DateTime StartTime;
-        private Random _random;
-        public Dictionary<Section, SectionData> Positions { get; set; }
-        private readonly Timer _timer;
+        Track = track;
+        Participants = participants;
+        _random = new Random(DateTime.Now.Millisecond);
+        _finishedParticipants = 0;
 
-        public EventHandler<DriversChangedEventArgs> DriversChanged;
-
-        public Race(Track track, List<IParticipant> participants)
+        Positions = new Dictionary<Section, SectionData>();
+        foreach (Section section in track.Sections)
         {
-            Track = track;
-            Participants = participants;
-            StartTime = DateTime.Now;
-            _random = new Random(DateTime.Now.Millisecond);
+            Positions.Add(section, new SectionData());
+        }
+    }
 
-            Positions = new Dictionary<Section, SectionData>();
-            foreach (Section section in track.Sections)
-            {
-                Positions.Add(section, new SectionData());
-            }
+    private SectionData GetSectionData(Section section)
+    {
+        SectionData value = Positions.GetValueOrDefault(section, null);
 
-            _timer = new Timer(200);
-            _timer.Elapsed += OnTimedEvent;
-            _timer.AutoReset = true;
+        if (value == null)
+        {
+            value = new SectionData();
+            Positions.Add(section, value);
         }
 
-        public SectionData GetSectionData(Section section)
-        {
-            SectionData value = Positions.GetValueOrDefault(section, null);
+        return value;
+    }
 
-            if (value == null)
+    public void RandomizeEquipment()
+    {
+        for (int i = 0; i < Participants.Count; i++)
+        {
+            IParticipant participant = Participants[i];
+
+            participant.Equipment.Speed = _random.Next(7, 10);
+            participant.Equipment.Performance = _random.Next(6, 10);
+            participant.Equipment.Quality = _random.Next(50, 100);
+
+            Participants[i] = participant;
+        }
+    }
+
+    private void OnTimedEvent(object source, ElapsedEventArgs e)
+    {
+        bool render = false;
+
+        // loop backwards to do front cars first
+        for (int index = Track.Sections.Count - 1; index >= 0; index--)
+        {
+            // get current and next section
+            Section section = Track.Sections.ElementAt(index);
+            SectionData sectionData = GetSectionData(section);
+            Section nextSection;
+
+            try
             {
-                value = new SectionData();
-                Positions.Add(section, value);
+                nextSection = Track.Sections.ElementAt(index + 1);
+            }
+            catch (Exception)
+            {
+                nextSection = Track.Sections.ElementAt(0);
             }
 
-            return value;
-        }
+            SectionData nextSectionData = GetSectionData(nextSection);
 
-        public void RandomizeEquipment()
-        {
-            for (int i = 0; i < Participants.Count; i++)
+            if (sectionData.Left != null)
             {
-                IParticipant participant = Participants[i];
+                // add driven distance
+                int passedDistance = sectionData.Left.Equipment.Distance();
+                sectionData.DistanceLeft += passedDistance;
 
-                Random r = new(DateTime.Now.Millisecond);
-                participant.Equipment.Quality = (int)r.NextInt64();
-                participant.Equipment.Performance = (int)r.NextInt64();
-
-                Participants[i] = participant;
-            }
-        }
-
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
-        {
-            //              _
-            //  _ __   __ _(_)_ __
-            // | '_ \ / _` | | '_ \
-            // | |_) | (_| | | | | |
-            // | .__/ \__,_|_|_| |_|
-            // |_|
-            
-            bool render = false;
-
-            // loop backwards to do front cars first
-            for (int index = Track.Sections.Count - 1; index >= 0; index--)
-            {
-                Section section = Track.Sections.ElementAt(index);
-                SectionData sectionData = GetSectionData(section);
-                Section nextSection;
-
-                try
+                // break the car
+                if (_random.Next(0, sectionData.Left.Equipment.Quality) == 0)
                 {
-                    nextSection = Track.Sections.ElementAt(index + 1);
-                }
-                catch (Exception ex)
-                {
-                    nextSection = Track.Sections.ElementAt(0);
+                    sectionData.Left.Equipment.IsBroken = true;
+                    render = true;
                 }
 
-                SectionData nextSectionData = GetSectionData(nextSection);
-                
-                if (sectionData.Left != null)
+                // check if able to go to next section
+                if (!sectionData.Left.Equipment.IsBroken && sectionData.DistanceLeft > Section.SectionLength)
                 {
-                    int passedDistance = sectionData.Left.Equipment.Distance();
-
-                    if (sectionData.DistanceLeft + passedDistance > Section.SectionLength)
+                    // try straight ahead
+                    if (nextSectionData.Left == null)
                     {
-                        if (nextSectionData.Left == null)
+                        // set driver section
+                        sectionData.Left.Section = index;
+
+                        // add points if lapped
+                        if (section.SectionType == SectionTypes.Finish)
+                        {
+                            sectionData.Left.AddPoint();
+                        }
+
+                        if (sectionData.Left.Points == Track.Laps + 1)
+                        {
+                            _finishedParticipants++;
+                            sectionData.Left = null;
+                        }
+                        else
                         {
                             // copy data to next section
                             nextSectionData.Left = sectionData.Left;
@@ -104,10 +122,28 @@ namespace Controller
                             // clear data for current section
                             sectionData.Left = null;
                             sectionData.DistanceLeft = 0;
-
-                            render = true;
                         }
-                        else if (nextSectionData.Right == null)
+
+                        render = true;
+                    }
+                    // try diagonal
+                    else if (nextSectionData.Right == null)
+                    {
+                        // set driver section
+                        sectionData.Left.Section = index;
+
+                        // add points if lapped
+                        if (section.SectionType == SectionTypes.Finish)
+                        {
+                            sectionData.Left.AddPoint();
+                        }
+
+                        if (sectionData.Left.Points == Track.Laps + 1)
+                        {
+                            _finishedParticipants++;
+                            sectionData.Left = null;
+                        }
+                        else
                         {
                             // copy data to next section
                             nextSectionData.Right = sectionData.Left;
@@ -116,27 +152,56 @@ namespace Controller
                             // clear data for current section
                             sectionData.Left = null;
                             sectionData.DistanceLeft = 0;
+                        }
 
-                            render = true;
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{sectionData.Left.TeamColor} wil er langs");
-                            sectionData.DistanceLeft = Section.SectionLength;
-                        }
-                    }
-                    else
-                    {
-                        sectionData.DistanceLeft += passedDistance;
+
+                        render = true;
                     }
                 }
-                else if (sectionData.Right != null)
+                else
                 {
-                    int passedDistance = sectionData.Right.Equipment.Distance();
-
-                    if (sectionData.DistanceRight + passedDistance > Section.SectionLength)
+                    // fix car 5% of the time
+                    if (_random.Next(0, 20) == 0)
                     {
-                        if (nextSectionData.Right == null)
+                        sectionData.Left.Equipment.IsBroken = false;
+                        render = true;
+                    }
+                }
+            }
+            else if (sectionData.Right != null)
+            {
+                // add driven distance
+                int passedDistance = sectionData.Right.Equipment.Distance();
+                sectionData.DistanceRight += passedDistance;
+
+                // break the car
+                if (_random.Next(0, sectionData.Right.Equipment.Quality) == 0)
+                {
+                    sectionData.Right.Equipment.IsBroken = true;
+                    render = true;
+                }
+
+                // check if able to go to next section
+                if (!sectionData.Right.Equipment.IsBroken && sectionData.DistanceRight > Section.SectionLength)
+                {
+                    // try straight ahead
+                    if (nextSectionData.Right == null)
+                    {
+                        // set driver section
+                        sectionData.Right.Section = index;
+
+                        // add points if lapped
+                        if (section.SectionType == SectionTypes.Finish)
+                        {
+                            sectionData.Right.AddPoint();
+                        }
+
+                        if (sectionData.Right.Points == Track.Laps + 1)
+                        {
+                            _finishedParticipants++;
+                            sectionData.Right = null;
+                        }
+                        else
                         {
                             // copy data to next section
                             nextSectionData.Right = sectionData.Right;
@@ -145,10 +210,28 @@ namespace Controller
                             // clear data for current section
                             sectionData.Right = null;
                             sectionData.DistanceRight = 0;
-
-                            render = true;
                         }
-                        else if (nextSectionData.Left == null)
+
+                        render = true;
+                    }
+                    // check diagonal
+                    else if (nextSectionData.Left == null)
+                    {
+                        // set driver section
+                        sectionData.Right.Section = index;
+
+                        // add points if lapped
+                        if (section.SectionType == SectionTypes.Finish)
+                        {
+                            sectionData.Right.AddPoint();
+                        }
+
+                        if (sectionData.Right.Points == Track.Laps + 1)
+                        {
+                            _finishedParticipants++;
+                            sectionData.Right = null;
+                        }
+                        else
                         {
                             // copy data to next section
                             nextSectionData.Left = sectionData.Right;
@@ -157,31 +240,39 @@ namespace Controller
                             // clear data for current section
                             sectionData.Right = null;
                             sectionData.DistanceRight = 0;
+                        }
 
-                            render = true;
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{sectionData.Right.TeamColor} wil er langs");
-                            sectionData.DistanceRight = Section.SectionLength;
-                        }
+                        render = true;
                     }
-                    else
+                }
+                else
+                {
+                    // fix car 5% of the time
+                    if (_random.Next(0, 20) == 0)
                     {
-                        sectionData.DistanceRight += passedDistance;
+                        sectionData.Right.Equipment.IsBroken = false;
+                        render = true;
                     }
                 }
             }
-
-            if (render)
-            {
-                DriversChanged.Invoke(this, new DriversChangedEventArgs(Track));
-            }
         }
 
-        public void Start()
+        if (render)
         {
-            _timer.Start();
+            DriversChanged.Invoke(this, new DriversChangedEventArgs(Track));
         }
+
+        if (_finishedParticipants >= Participants.Count)
+        {
+            RaceEnded.Invoke(this, new RaceEndedEventArgs());
+        }
+    }
+
+    public void Start()
+    {
+        _timer = new Timer(200);
+        _timer.Elapsed += OnTimedEvent;
+        _timer.AutoReset = true;
+        _timer.Start();
     }
 }

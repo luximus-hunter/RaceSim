@@ -1,82 +1,81 @@
 ﻿using Model;
 using Spectre.Console;
 
-namespace ControllerTest
+namespace ControllerTest;
+
+[TestFixture]
+public class Model_Competition_NextTrack
 {
-    [TestFixture]
-    public class Model_Competition_NextTrack
+    private Competition _competition;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Competition _competition;
+        _competition = new Competition();
+    }
 
-        [SetUp]
-        public void SetUp()
+    [Test]
+    public void NextTrack_EmptyQueue_ReturnNull()
+    {
+        Track result = _competition.NextTrack();
+        Assert.IsNull(result);
+    }
+
+    [Test]
+    public void NextTrack_OneInQueue_ReturnTrack()
+    {
+        SectionTypes[] t =
         {
-            _competition = new Competition();
-        }
+            SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
+            SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
+        };
+        Track track = new("Track 1", 1, 1, Direction.Right, Color.Green, t);
 
-        [Test]
-        public void NextTrack_EmptyQueue_ReturnNull()
+        _competition.Tracks.Enqueue(track);
+
+        Track result = _competition.NextTrack();
+
+        Assert.That(result, Is.EqualTo(track));
+    }
+
+    [Test]
+    public void NextTrack_OneInQueue_RemoveTrackFromQueue()
+    {
+        SectionTypes[] t =
         {
-            Track result = _competition.NextTrack();
-            Assert.IsNull(result);
-        }
+            SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
+            SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
+        };
+        Track track = new Track("Track 1", 1, 1, Direction.Right, Color.Green, t);
 
-        [Test]
-        public void NextTrack_OneInQueue_ReturnTrack()
+        _competition.Tracks.Enqueue(track);
+
+        Track result = _competition.NextTrack();
+        result = _competition.NextTrack();
+
+        Assert.IsNull(result);
+    }
+
+    [Test]
+    public void NextTrack_TwoInQueue_ReturnNextTrack()
+    {
+        SectionTypes[] t =
         {
-            SectionTypes[] t =
-            {
-                SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
-                SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
-            };
-            Track track = new Track("Track 1", 1, Direction.Right, Color.Green, t);
+            SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
+            SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
+        };
+        Track track1 = new Track("Track 1", 1, 1, Direction.Right, Color.Green, t);
+        Track track2 = new Track("Track 2", 1, 1, Direction.Right, Color.Green, t);
 
-            _competition.Tracks.Enqueue(track);
+        _competition.Tracks.Enqueue(track1);
+        _competition.Tracks.Enqueue(track2);
 
-            Track result = _competition.NextTrack();
+        Track result = _competition.NextTrack();
 
-            Assert.That(result, Is.EqualTo(track));
-        }
+        Assert.That(track1.Name, Is.EqualTo(result.Name));
 
-        [Test]
-        public void NextTrack_OneInQueue_RemoveTrackFromQueue()
-        {
-            SectionTypes[] t =
-            {
-                SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
-                SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
-            };
-            Track track = new Track("Track 1", 1, Direction.Right, Color.Green, t);
+        result = _competition.NextTrack();
 
-            _competition.Tracks.Enqueue(track);
-
-            Track result = _competition.NextTrack();
-            result = _competition.NextTrack();
-
-            Assert.IsNull(result);
-        }
-
-        [Test]
-        public void NextTrack_TwoInQueue_ReturnNextTrack()
-        {
-            SectionTypes[] t =
-            {
-                SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
-                SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
-            };
-            Track track1 = new Track("Track 1", 1, Direction.Right, Color.Green, t);
-            Track track2 = new Track("Track 2", 1, Direction.Right, Color.Green, t);
-
-            _competition.Tracks.Enqueue(track1);
-            _competition.Tracks.Enqueue(track2);
-
-            Track result = _competition.NextTrack();
-
-            Assert.That(track1.Name, Is.EqualTo(result.Name));
-
-            result = _competition.NextTrack();
-
-            Assert.That(track2.Name, Is.EqualTo(result.Name));
-        }
+        Assert.That(track2.Name, Is.EqualTo(result.Name));
     }
 }

@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Model;
 
-namespace Model
+public class Competition
 {
-    public class Competition
+    public List<IParticipant> Participants { get; }
+    public Queue<Track> Tracks { get; }
+
+    public Competition()
     {
-        public List<IParticipant> Participants { get; }
-        public Queue<Track> Tracks { get; }
+        Participants = new List<IParticipant>();
+        Tracks = new Queue<Track>();
+    }
 
-        public Competition()
+    public Track NextTrack()
+    {
+        if (Tracks.Count > 0)
         {
-            Participants = new List<IParticipant>();
-            Tracks = new Queue<Track>();
+            return Tracks.Dequeue();
         }
 
-        public Track? NextTrack()
-        {
-            if (Tracks.Count > 0)
-            {
-                return Tracks.Dequeue();
-            }
-            else
-            {
-                return null;
-            }
-        }
+        return null;
     }
 }
