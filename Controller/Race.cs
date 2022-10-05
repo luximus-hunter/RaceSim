@@ -9,9 +9,10 @@ public class Race
     public Track Track { get; }
     public List<IParticipant> Participants { get; }
     public Dictionary<Section, SectionData> Positions { get; }
+
     private Timer _timer;
-    private int _finishedParticipants;
     private readonly Random _random;
+    private Dictionary<IParticipant, int> _roundsCompleted;
 
     public EventHandler<DriversChangedEventArgs> DriversChanged;
     public EventHandler<RaceEndedEventArgs> RaceEnded;
@@ -20,8 +21,13 @@ public class Race
     {
         Track = track;
         Participants = participants;
+
         _random = new Random(DateTime.Now.Millisecond);
-        _finishedParticipants = 0;
+        _roundsCompleted = new Dictionary<IParticipant, int>();
+        
+        _timer = new Timer(200);
+        _timer.Elapsed += OnTimedEvent;
+        _timer.AutoReset = true;
 
         Positions = new Dictionary<Section, SectionData>();
         foreach (Section section in track.Sections)
@@ -82,6 +88,8 @@ public class Race
 
             if (sectionData.Left != null)
             {
+                // int driverCode = sectionData.Left.GetHashCode();
+                
                 // add driven distance
                 int passedDistance = sectionData.Left.Equipment.Distance();
                 sectionData.DistanceLeft += passedDistance;
@@ -99,18 +107,22 @@ public class Race
                     // try straight ahead
                     if (nextSectionData.Left == null)
                     {
-                        // set driver section
-                        sectionData.Left.Section = index;
-
-                        // add points if lapped
+                        // // add points if lapped
                         if (section.SectionType == SectionTypes.Finish)
                         {
-                            sectionData.Left.AddPoint();
+                            if (_roundsCompleted.ContainsKey(sectionData.Left))
+                            {
+                                _roundsCompleted[sectionData.Left]++;
+                            }
+                            else
+                            {
+                                _roundsCompleted.Add(sectionData.Left, 0);
+                            }
                         }
-
-                        if (sectionData.Left.Points == Track.Laps + 1)
+                        
+                        // remove from track when finished
+                        if (_roundsCompleted.ContainsKey(sectionData.Left) && _roundsCompleted[sectionData.Left] == Track.Laps)
                         {
-                            _finishedParticipants++;
                             sectionData.Left = null;
                         }
                         else
@@ -129,18 +141,22 @@ public class Race
                     // try diagonal
                     else if (nextSectionData.Right == null)
                     {
-                        // set driver section
-                        sectionData.Left.Section = index;
-
                         // add points if lapped
                         if (section.SectionType == SectionTypes.Finish)
                         {
-                            sectionData.Left.AddPoint();
+                            if (_roundsCompleted.ContainsKey(sectionData.Left))
+                            {
+                                _roundsCompleted[sectionData.Left]++;
+                            }
+                            else
+                            {
+                                _roundsCompleted.Add(sectionData.Left, 0);
+                            }
                         }
 
-                        if (sectionData.Left.Points == Track.Laps + 1)
+                        // remove from track when finished
+                        if (_roundsCompleted.ContainsKey(sectionData.Left) && _roundsCompleted[sectionData.Left] == Track.Laps)
                         {
-                            _finishedParticipants++;
                             sectionData.Left = null;
                         }
                         else
@@ -153,7 +169,6 @@ public class Race
                             sectionData.Left = null;
                             sectionData.DistanceLeft = 0;
                         }
-
 
                         render = true;
                     }
@@ -170,6 +185,8 @@ public class Race
             }
             else if (sectionData.Right != null)
             {
+                // int driverCode = sectionData.Right.GetHashCode();
+                
                 // add driven distance
                 int passedDistance = sectionData.Right.Equipment.Distance();
                 sectionData.DistanceRight += passedDistance;
@@ -187,18 +204,22 @@ public class Race
                     // try straight ahead
                     if (nextSectionData.Right == null)
                     {
-                        // set driver section
-                        sectionData.Right.Section = index;
-
                         // add points if lapped
                         if (section.SectionType == SectionTypes.Finish)
                         {
-                            sectionData.Right.AddPoint();
+                            if (_roundsCompleted.ContainsKey(sectionData.Right))
+                            {
+                                _roundsCompleted[sectionData.Right]++;
+                            }
+                            else
+                            {
+                                _roundsCompleted.Add(sectionData.Right, 0);
+                            }
                         }
-
-                        if (sectionData.Right.Points == Track.Laps + 1)
+                        
+                        // remove from track when finished
+                        if (_roundsCompleted.ContainsKey(sectionData.Right) && _roundsCompleted[sectionData.Right] == Track.Laps)
                         {
-                            _finishedParticipants++;
                             sectionData.Right = null;
                         }
                         else
@@ -217,18 +238,22 @@ public class Race
                     // check diagonal
                     else if (nextSectionData.Left == null)
                     {
-                        // set driver section
-                        sectionData.Right.Section = index;
-
                         // add points if lapped
                         if (section.SectionType == SectionTypes.Finish)
                         {
-                            sectionData.Right.AddPoint();
+                            if (_roundsCompleted.ContainsKey(sectionData.Right))
+                            {
+                                _roundsCompleted[sectionData.Right]++;
+                            }
+                            else
+                            {
+                                _roundsCompleted.Add(sectionData.Right, 0);
+                            }
                         }
-
-                        if (sectionData.Right.Points == Track.Laps + 1)
+                        
+                        // remove from track when finished
+                        if (_roundsCompleted.ContainsKey(sectionData.Right) && _roundsCompleted[sectionData.Right] == Track.Laps)
                         {
-                            _finishedParticipants++;
                             sectionData.Right = null;
                         }
                         else
@@ -261,18 +286,32 @@ public class Race
         {
             DriversChanged.Invoke(this, new DriversChangedEventArgs(Track));
         }
+        
+        // TODO: fix this ⬇ garbage, it works for now...
+        bool nextTrack = true;
+        
+        for (int i = 0; i < Track.Laps; i++)
+        {
+            if (_roundsCompleted.ContainsValue(i))
+            {
+                nextTrack = false;
+            }
+        }
 
-        if (_finishedParticipants >= Participants.Count)
+        if (_roundsCompleted.Count != Participants.Count)
+        {
+            nextTrack = false;
+        }
+
+        if (nextTrack)
         {
             RaceEnded.Invoke(this, new RaceEndedEventArgs());
         }
+        // TODO: end of ⬆ that garbage
     }
 
     public void Start()
     {
-        _timer = new Timer(200);
-        _timer.Elapsed += OnTimedEvent;
-        _timer.AutoReset = true;
         _timer.Start();
     }
 }
