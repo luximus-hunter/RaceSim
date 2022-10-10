@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Graphics\Cars\car_black.png" />
+      <Content Include="Graphics\Cars\car_black.png" />
+      <None Remove="Graphics\Cars\car_blue.png" />
+      <Content Include="Graphics\Cars\car_blue.png" />
+      <None Remove="Graphics\Cars\car_broken.png" />
+      <Content Include="Graphics\Cars\car_broken.png" />
+      <None Remove="Graphics\Cars\car_brown.png" />
+      <Content Include="Graphics\Cars\car_brown.png" />
+      <None Remove="Graphics\Cars\car_cyan.png" />
+      <Content Include="Graphics\Cars\car_cyan.png" />
+      <None Remove="Graphics\Cars\car_green.png" />
+      <Content Include="Graphics\Cars\car_green.png" />
+      <None Remove="Graphics\Cars\car_grey.png" />
+      <Content Include="Graphics\Cars\car_grey.png" />
+      <None Remove="Graphics\Cars\car_lime.png" />
+      <Content Include="Graphics\Cars\car_lime.png" />
+      <None Remove="Graphics\Cars\car_magenta.png" />
+      <Content Include="Graphics\Cars\car_magenta.png" />
+      <None Remove="Graphics\Cars\car_orange.png" />
+      <Content Include="Graphics\Cars\car_orange.png" />
+      <None Remove="Graphics\Cars\car_pink.png" />
+      <Content Include="Graphics\Cars\car_pink.png" />
+      <None Remove="Graphics\Cars\car_purple.png" />
+      <Content Include="Graphics\Cars\car_purple.png" />
+      <None Remove="Graphics\Cars\car_red.png" />
+      <Content Include="Graphics\Cars\car_red.png" />
+      <None Remove="Graphics\Cars\car_silver.png" />
+      <Content Include="Graphics\Cars\car_silver.png" />
+      <None Remove="Graphics\Cars\car_sky.png" />
+      <Content Include="Graphics\Cars\car_sky.png" />
+      <None Remove="Graphics\Cars\car_white.png" />
+      <Content Include="Graphics\Cars\car_white.png" />
+      <None Remove="Graphics\Cars\car_yellow.png" />
+      <Content Include="Graphics\Cars\car_yellow.png" />
+      <None Remove="Graphics\Track\track_corner.png" />
+      <Content Include="Graphics\Track\track_corner.png" />
+      <None Remove="Graphics\Track\track_finish.png" />
+      <Content Include="Graphics\Track\track_finish.png" />
+      <None Remove="Graphics\Track\track_start.png" />
+      <Content Include="Graphics\Track\track_start.png" />
+      <None Remove="Graphics\Track\track_straight.png" />
+      <Content Include="Graphics\Track\track_straight.png" />
+    </ItemGroup>
+
+</Project>
