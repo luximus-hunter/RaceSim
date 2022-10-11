@@ -1,5 +1,5 @@
-﻿using Model;
-using Spectre.Console;
+﻿using System.Drawing;
+using Model;
 
 namespace ControllerTest;
 

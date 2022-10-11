@@ -16,7 +16,7 @@ public class Model_Driver
         Car c = new(10, 20, 30, false);
         Driver d = new("Driver A", c, TeamColors.Red);
 
-        Assert.That(d.Name == "Driver A" && d.Points == 100 && d.Equipment == c && d.TeamColor == TeamColors.Red);
+        Assert.That(d.Name == "Driver A" && d.Points == 0 && d.Equipment == c && d.TeamColor == TeamColors.Red);
     }
 
     [Test]

@@ -9,47 +9,98 @@
 
     <ItemGroup>
       <None Remove="Graphics\Cars\car_black.png" />
-      <Content Include="Graphics\Cars\car_black.png" />
+      <Content Include="Graphics\Cars\car_black.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_blue.png" />
-      <Content Include="Graphics\Cars\car_blue.png" />
-      <None Remove="Graphics\Cars\car_broken.png" />
-      <Content Include="Graphics\Cars\car_broken.png" />
+      <Content Include="Graphics\Cars\car_blue.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_brown.png" />
-      <Content Include="Graphics\Cars\car_brown.png" />
+      <Content Include="Graphics\Cars\car_broken.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Graphics\Cars\car_brown.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_cyan.png" />
-      <Content Include="Graphics\Cars\car_cyan.png" />
+      <Content Include="Graphics\Cars\car_cyan.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_green.png" />
-      <Content Include="Graphics\Cars\car_green.png" />
+      <Content Include="Graphics\Cars\car_green.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_grey.png" />
-      <Content Include="Graphics\Cars\car_grey.png" />
+      <Content Include="Graphics\Cars\car_grey.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_lime.png" />
-      <Content Include="Graphics\Cars\car_lime.png" />
+      <Content Include="Graphics\Cars\car_lime.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_magenta.png" />
-      <Content Include="Graphics\Cars\car_magenta.png" />
+      <Content Include="Graphics\Cars\car_magenta.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_orange.png" />
-      <Content Include="Graphics\Cars\car_orange.png" />
+      <Content Include="Graphics\Cars\car_orange.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_pink.png" />
-      <Content Include="Graphics\Cars\car_pink.png" />
+      <Content Include="Graphics\Cars\car_pink.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_purple.png" />
-      <Content Include="Graphics\Cars\car_purple.png" />
+      <Content Include="Graphics\Cars\car_purple.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_red.png" />
-      <Content Include="Graphics\Cars\car_red.png" />
+      <Content Include="Graphics\Cars\car_red.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_silver.png" />
-      <Content Include="Graphics\Cars\car_silver.png" />
+      <Content Include="Graphics\Cars\car_silver.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_sky.png" />
-      <Content Include="Graphics\Cars\car_sky.png" />
+      <Content Include="Graphics\Cars\car_sky.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_white.png" />
-      <Content Include="Graphics\Cars\car_white.png" />
+      <Content Include="Graphics\Cars\car_white.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Cars\car_yellow.png" />
-      <Content Include="Graphics\Cars\car_yellow.png" />
+      <Content Include="Graphics\Cars\car_yellow.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Track\track_corner.png" />
-      <Content Include="Graphics\Track\track_corner.png" />
+      <Content Include="Graphics\Track\track_corner.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Track\track_finish.png" />
-      <Content Include="Graphics\Track\track_finish.png" />
+      <Content Include="Graphics\Track\track_finish.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Track\track_start.png" />
-      <Content Include="Graphics\Track\track_start.png" />
+      <Content Include="Graphics\Track\track_start.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <None Remove="Graphics\Track\track_straight.png" />
-      <Content Include="Graphics\Track\track_straight.png" />
+      <Content Include="Graphics\Track\track_straight.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Cars\car_broken.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Blurhash.System.Drawing.Common" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Controller\Controller.csproj" />
+      <ProjectReference Include="..\Model\Model.csproj" />
     </ItemGroup>
 
 </Project>

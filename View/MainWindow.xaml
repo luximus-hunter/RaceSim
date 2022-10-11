@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
     <Grid>
-        <Grid x:Name="Grid">
-            <Image x:Name="Image" HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <Grid>
+            <Image x:Name="TrackImage" HorizontalAlignment="Left" Height="800" Width="1200" VerticalAlignment="Top" />
         </Grid>
 
     </Grid>

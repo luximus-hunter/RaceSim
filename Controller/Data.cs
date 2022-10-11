@@ -1,5 +1,5 @@
-﻿using Model;
-using Spectre.Console;
+﻿using System.Drawing;
+using Model;
 
 namespace Controller;
 
@@ -65,7 +65,7 @@ public static class Data
             SectionTypes.RightCorner,
         }));
 
-        Competition.Tracks.Enqueue(new Track("Bridge Track", 2, 2, Direction.Right, Color.Wheat1, new[]
+        Competition.Tracks.Enqueue(new Track("Bridge Track", 2, 2, Direction.Right, Color.SandyBrown, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,

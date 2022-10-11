@@ -1,6 +1,7 @@
 ﻿using Controller;
 using Model;
 using Spectre.Console;
+using Color = System.Drawing.Color;
 
 namespace RaceSim;
 
@@ -277,7 +278,7 @@ public static class Visualisation
         {
             for (int j = 0; j < _canvas.Width; j++)
             {
-                _canvas.SetPixel(j, i, Data.CurrentRace.Track.Background);
+                // _canvas.SetPixel(j, i, Data.CurrentRace.Track.Background);
             }
         }
 
@@ -326,41 +327,25 @@ public static class Visualisation
         switch (section.SectionType)
         {
             case SectionTypes.LeftCorner:
-                if (_direction == Direction.Up)
+                _direction = _direction switch
                 {
-                    _direction = Direction.Left;
-                }
-                else if (_direction == Direction.Left)
-                {
-                    _direction = Direction.Down;
-                }
-                else if (_direction == Direction.Down)
-                {
-                    _direction = Direction.Right;
-                }
-                else if (_direction == Direction.Right)
-                {
-                    _direction = Direction.Up;
-                }
+                    Direction.Up => Direction.Left,
+                    Direction.Left => Direction.Down,
+                    Direction.Down => Direction.Right,
+                    Direction.Right => Direction.Up,
+                    _ => _direction
+                };
 
                 break;
             case SectionTypes.RightCorner:
-                if (_direction == Direction.Up)
+                _direction = _direction switch
                 {
-                    _direction = Direction.Right;
-                }
-                else if (_direction == Direction.Left)
-                {
-                    _direction = Direction.Up;
-                }
-                else if (_direction == Direction.Down)
-                {
-                    _direction = Direction.Left;
-                }
-                else if (_direction == Direction.Right)
-                {
-                    _direction = Direction.Down;
-                }
+                    Direction.Up => Direction.Right,
+                    Direction.Left => Direction.Up,
+                    Direction.Down => Direction.Left,
+                    Direction.Right => Direction.Down,
+                    _ => _direction
+                };
 
                 break;
         }
@@ -375,106 +360,80 @@ public static class Visualisation
         switch (section.SectionType)
         {
             case SectionTypes.Straight:
-                if (_direction == Direction.Up)
+                tile = _direction switch
                 {
-                    tile = StraightUp;
-                }
-                else if (_direction == Direction.Left)
-                {
-                    tile = StraightLeft;
-                }
-                else if (_direction == Direction.Down)
-                {
-                    tile = StraightDown;
-                }
-                else if (_direction == Direction.Right)
-                {
-                    tile = StraightRight;
-                }
+                    Direction.Up => StraightUp,
+                    Direction.Left => StraightLeft,
+                    Direction.Down => StraightDown,
+                    Direction.Right => StraightRight,
+                    _ => tile
+                };
 
                 break;
             case SectionTypes.LeftCorner:
-                if (_direction == Direction.Up)
+                switch (_direction)
                 {
-                    tile = CornerLd;
-                    _direction = Direction.Left;
-                }
-                else if (_direction == Direction.Left)
-                {
-                    tile = CornerRd;
-                    _direction = Direction.Down;
-                }
-                else if (_direction == Direction.Down)
-                {
-                    tile = CornerRu;
-                    _direction = Direction.Right;
-                }
-                else if (_direction == Direction.Right)
-                {
-                    tile = CornerLu;
-                    _direction = Direction.Up;
+                    case Direction.Up:
+                        tile = CornerLd;
+                        _direction = Direction.Left;
+                        break;
+                    case Direction.Left:
+                        tile = CornerRd;
+                        _direction = Direction.Down;
+                        break;
+                    case Direction.Down:
+                        tile = CornerRu;
+                        _direction = Direction.Right;
+                        break;
+                    case Direction.Right:
+                        tile = CornerLu;
+                        _direction = Direction.Up;
+                        break;
                 }
 
                 break;
             case SectionTypes.RightCorner:
-                if (_direction == Direction.Up)
+                switch (_direction)
                 {
-                    tile = CornerRd;
-                    _direction = Direction.Right;
-                }
-                else if (_direction == Direction.Left)
-                {
-                    tile = CornerRu;
-                    _direction = Direction.Up;
-                }
-                else if (_direction == Direction.Down)
-                {
-                    tile = CornerLu;
-                    _direction = Direction.Left;
-                }
-                else if (_direction == Direction.Right)
-                {
-                    tile = CornerLd;
-                    _direction = Direction.Down;
+                    case Direction.Up:
+                        tile = CornerRd;
+                        _direction = Direction.Right;
+                        break;
+                    case Direction.Left:
+                        tile = CornerRu;
+                        _direction = Direction.Up;
+                        break;
+                    case Direction.Down:
+                        tile = CornerLu;
+                        _direction = Direction.Left;
+                        break;
+                    case Direction.Right:
+                        tile = CornerLd;
+                        _direction = Direction.Down;
+                        break;
                 }
 
                 break;
             case SectionTypes.StartGrid:
-                if (_direction == Direction.Up)
+                tile = _direction switch
                 {
-                    tile = StartUp;
-                }
-                else if (_direction == Direction.Left)
-                {
-                    tile = StartLeft;
-                }
-                else if (_direction == Direction.Down)
-                {
-                    tile = StartDown;
-                }
-                else if (_direction == Direction.Right)
-                {
-                    tile = StartRight;
-                }
+                    Direction.Up => StartUp,
+                    Direction.Left => StartLeft,
+                    Direction.Down => StartDown,
+                    Direction.Right => StartRight,
+                    _ => tile
+                };
 
                 break;
             case SectionTypes.Finish:
-                if (_direction == Direction.Up)
+                tile = _direction switch
                 {
-                    tile = FinishUp;
-                }
-                else if (_direction == Direction.Left)
-                {
-                    tile = FinishLeft;
-                }
-                else if (_direction == Direction.Down)
-                {
-                    tile = FinishDown;
-                }
-                else if (_direction == Direction.Right)
-                {
-                    tile = FinishRight;
-                }
+                    Direction.Up => FinishUp,
+                    Direction.Left => FinishLeft,
+                    Direction.Down => FinishDown,
+                    Direction.Right => FinishRight,
+                    _ => tile
+                };
 
                 break;
         }
@@ -518,20 +477,20 @@ public static class Visualisation
                         break;
                     // broken driver
                     case '#':
-                        color = Color.Grey;
+                        color = Color.Gray;
                         break;
                     // drivers
                     case 'w':
                         color = Color.White;
                         break;
                     case 'o':
-                        color = Color.Orange1;
+                        color = Color.Orange;
                         break;
                     case 'm':
-                        color = Color.Magenta1;
+                        color = Color.Magenta;
                         break;
                     case 'k':
-                        color = Color.SkyBlue1;
+                        color = Color.LightBlue;
                         break;
                     case 'y':
                         color = Color.Yellow;
@@ -540,16 +499,16 @@ public static class Visualisation
                         color = Color.Lime;
                         break;
                     case 'p':
-                        color = Color.Pink1;
+                        color = Color.Pink;
                         break;
                     case 'e':
-                        color = Color.Grey;
+                        color = Color.Gray;
                         break;
                     case 's':
                         color = Color.Silver;
                         break;
                     case 'c':
-                        color = Color.Cyan1;
+                        color = Color.Cyan;
                         break;
                     case 'u':
                         color = Color.Purple;
@@ -571,7 +530,7 @@ public static class Visualisation
                         break;
                     // road
                     default:
-                        color = Color.Grey23;
+                        color = Color.DarkSlateGray;
                         break;
                 }
 
@@ -579,7 +538,7 @@ public static class Visualisation
 
                 if (c != 'x')
                 {
-                    _canvas.SetPixel(relX, relY, color);
+                    // _canvas.SetPixel(relX, relY, color);
                 }
             }
         }
@@ -663,47 +622,6 @@ public static class Visualisation
                 return 'a';
             default:
                 return ' ';
-        }
-    }
-
-    private static string TeamColorToColorName(TeamColors tc)
-    {
-        switch (tc)
-        {
-            case TeamColors.White:
-                return "white";
-            case TeamColors.Orange:
-                return "orange1";
-            case TeamColors.Magenta:
-                return "magenta1";
-            case TeamColors.Sky:
-                return "skyblue1";
-            case TeamColors.Yellow:
-                return "yellow";
-            case TeamColors.Lime:
-                return "lime";
-            case TeamColors.Pink:
-                return "pink1";
-            case TeamColors.Grey:
-                return "grey";
-            case TeamColors.Silver:
-                return "silver";
-            case TeamColors.Cyan:
-                return "cyan1";
-            case TeamColors.Purple:
-                return "purple";
-            case TeamColors.Blue:
-                return "blue";
-            case TeamColors.Brown:
-                return "sandybrown";
-            case TeamColors.Green:
-                return "green";
-            case TeamColors.Red:
-                return "red";
-            case TeamColors.Black:
-                return "grey23";
-            default:
-                return "black";
         }
     }
 }
