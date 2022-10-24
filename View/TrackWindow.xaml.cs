@@ -8,11 +8,11 @@ using Model;
 namespace View
 {
     /// <summary> Interaction logic for MainWindow.xaml </summary>
-    public partial class MainWindow : Window
+    public partial class TrackWindow : Window
     {
         private const string WindowTitle = "Windesheim RaceSim";
         
-        public MainWindow()
+        public TrackWindow()
         {
             InitializeComponent();
             Data.Initialize();
