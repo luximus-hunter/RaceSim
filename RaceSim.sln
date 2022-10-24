@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceSim", "RaceSim\RaceSim.csproj", "{CA886581-D487-496D-B9F5-477076B3C5D8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{20A21C37-FEC7-4FDA-A379-EA3D7C6E3183}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controller", "Controller\Controller.csproj", "{6588F61A-33BC-4BD9-A530-E2200961D9D9}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CA886581-D487-496D-B9F5-477076B3C5D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA886581-D487-496D-B9F5-477076B3C5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA886581-D487-496D-B9F5-477076B3C5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA886581-D487-496D-B9F5-477076B3C5D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20A21C37-FEC7-4FDA-A379-EA3D7C6E3183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20A21C37-FEC7-4FDA-A379-EA3D7C6E3183}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20A21C37-FEC7-4FDA-A379-EA3D7C6E3183}.Release|Any CPU.ActiveCfg = Release|Any CPU

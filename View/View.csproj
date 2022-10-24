@@ -8,90 +8,203 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="Graphics\Cars\car_black.png" />
-      <Content Include="Graphics\Cars\car_black.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Graphics\Cars\car_blue.png" />
-      <Content Include="Graphics\Cars\car_blue.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Graphics\Cars\car_brown.png" />
-      <Content Include="Graphics\Cars\car_broken.png">
+      <None Remove="Graphics\Scaled\Cars\car_black.png" />
+      <None Remove="logo.png" />
+      <None Remove="Graphics\Scaled\Cars\car_blue.png" />
+      <None Remove="Graphics\Scaled\Cars\car_broken.png" />
+      <None Remove="Graphics\Scaled\Cars\car_brown.png" />
+      <None Remove="Graphics\Scaled\Cars\car_cyan.png" />
+      <None Remove="Graphics\Scaled\Cars\car_green.png" />
+      <None Remove="Graphics\Scaled\Cars\car_grey.png" />
+      <None Remove="Graphics\Scaled\Cars\car_lime.png" />
+      <None Remove="Graphics\Scaled\Cars\car_magenta.png" />
+      <None Remove="Graphics\Scaled\Cars\car_orange.png" />
+      <None Remove="Graphics\Scaled\Cars\car_pink.png" />
+      <None Remove="Graphics\Scaled\Cars\car_purple.png" />
+      <None Remove="Graphics\Scaled\Cars\car_red.png" />
+      <None Remove="Graphics\Scaled\Cars\car_silver.png" />
+      <None Remove="Graphics\Scaled\Cars\car_sky.png" />
+      <None Remove="Graphics\Scaled\Cars\car_white.png" />
+      <None Remove="Graphics\Scaled\Cars\car_yellow.png" />
+      <None Remove="Graphics\Scaled\Track\track_corner_left.png" />
+      <Content Include="Graphics\Scaled\Track\track_corner_left.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <Content Include="Graphics\Cars\car_brown.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Track\track_corner_right.png" />
+      <Content Include="Graphics\Scaled\Track\track_corner_right.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_cyan.png" />
-      <Content Include="Graphics\Cars\car_cyan.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Track\track_finish.png" />
+      <Content Include="Graphics\Scaled\Track\track_finish.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_green.png" />
-      <Content Include="Graphics\Cars\car_green.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Track\track_start.png" />
+      <Content Include="Graphics\Scaled\Track\track_start.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_grey.png" />
-      <Content Include="Graphics\Cars\car_grey.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Track\track_straight.png" />
+      <Content Include="Graphics\Scaled\Track\track_straight.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_lime.png" />
-      <Content Include="Graphics\Cars\car_lime.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\OG\Track\track_corner_left.png" />
+      <None Remove="Graphics\OG\Track\track_corner_right.png" />
+      <None Remove="Graphics\OG\Track\track_finish.png" />
+      <None Remove="Graphics\OG\Track\track_start.png" />
+      <None Remove="Graphics\OG\Track\track_straight.png" />
+      <None Remove="Graphics\OG\Cars\car_black.png" />
+      <None Remove="Graphics\OG\Cars\car_blue.png" />
+      <None Remove="Graphics\OG\Cars\car_broken.png" />
+      <None Remove="Graphics\OG\Cars\car_brown.png" />
+      <None Remove="Graphics\OG\Cars\car_cyan.png" />
+      <None Remove="Graphics\OG\Cars\car_green.png" />
+      <None Remove="Graphics\OG\Cars\car_grey.png" />
+      <None Remove="Graphics\OG\Cars\car_lime.png" />
+      <None Remove="Graphics\OG\Cars\car_magenta.png" />
+      <None Remove="Graphics\OG\Cars\car_orange.png" />
+      <None Remove="Graphics\OG\Cars\car_pink.png" />
+      <None Remove="Graphics\OG\Cars\car_purple.png" />
+      <None Remove="Graphics\OG\Cars\car_red.png" />
+      <None Remove="Graphics\OG\Cars\car_silver.png" />
+      <None Remove="Graphics\OG\Cars\car_sky.png" />
+      <None Remove="Graphics\OG\Cars\car_white.png" />
+      <None Remove="Graphics\OG\Cars\car_yellow.png" />
+      <None Remove="Graphics\OG\**" />
+      <None Remove="Graphics\Scaled\Cars\Straight\car_black.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_black.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_magenta.png" />
-      <Content Include="Graphics\Cars\car_magenta.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_blue.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_blue.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_orange.png" />
-      <Content Include="Graphics\Cars\car_orange.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_broken.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_broken.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_pink.png" />
-      <Content Include="Graphics\Cars\car_pink.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_brown.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_brown.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_purple.png" />
-      <Content Include="Graphics\Cars\car_purple.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_cyan.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_cyan.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_red.png" />
-      <Content Include="Graphics\Cars\car_red.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_green.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_green.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_silver.png" />
-      <Content Include="Graphics\Cars\car_silver.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_grey.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_grey.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_sky.png" />
-      <Content Include="Graphics\Cars\car_sky.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_lime.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_lime.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_white.png" />
-      <Content Include="Graphics\Cars\car_white.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_magenta.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_magenta.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_yellow.png" />
-      <Content Include="Graphics\Cars\car_yellow.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_orange.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_orange.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Track\track_corner.png" />
-      <Content Include="Graphics\Track\track_corner.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_pink.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_pink.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Track\track_finish.png" />
-      <Content Include="Graphics\Track\track_finish.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_purple.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_purple.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Track\track_start.png" />
-      <Content Include="Graphics\Track\track_start.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_red.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_red.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Track\track_straight.png" />
-      <Content Include="Graphics\Track\track_straight.png">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_silver.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_silver.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <None Remove="Graphics\Cars\car_broken.png" />
+      <None Remove="Graphics\Scaled\Cars\Straight\car_sky.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_sky.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_white.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_white.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Straight\car_yellow.png" />
+      <Content Include="Graphics\Scaled\Cars\Straight\car_yellow.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_black.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_black.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_blue.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_blue.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_broken.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_broken.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_brown.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_brown.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_cyan.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_cyan.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_green.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_green.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_grey.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_grey.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_lime.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_lime.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_magenta.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_magenta.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_orange.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_orange.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_pink.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_pink.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_purple.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_purple.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_red.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_red.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_silver.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_silver.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_sky.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_sky.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_white.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_white.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Graphics\Scaled\Cars\Corner\car_yellow.png" />
+      <Content Include="Graphics\Scaled\Cars\Corner\car_yellow.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
@@ -101,6 +214,22 @@
     <ItemGroup>
       <ProjectReference Include="..\Controller\Controller.csproj" />
       <ProjectReference Include="..\Model\Model.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="logo.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Graphics\OG\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Graphics\OG\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Remove="Graphics\OG\**" />
     </ItemGroup>
 
 </Project>

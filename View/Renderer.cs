@@ -8,15 +8,18 @@ namespace View;
 
 public static class Renderer
 {
-    private static int _tileSize = 128;
     private static Direction _direction;
+
+    private const int TileSize = 128;
+    private const int CarSize = TileSize / 2;
 
     #region Graphics
 
-    private const string _trackStraight = @".\Graphics\Track\track_straight.png";
-    private const string _trackStart = @".\Graphics\Track\track_start.png";
-    private const string _trackFinish = @".\Graphics\Track\track_finish.png";
-    private const string _trackCorner = @".\Graphics\Track\track_corner.png";
+    private const string TrackStraight = @".\Graphics\Scaled\Track\track_straight.png";
+    private const string TrackStart = @".\Graphics\Scaled\Track\track_start.png";
+    private const string TrackFinish = @".\Graphics\Scaled\Track\track_finish.png";
+    private const string TrackCornerLeft = @".\Graphics\Scaled\Track\track_corner_left.png";
+    private const string TrackCornerRight = @".\Graphics\Scaled\Track\track_corner_right.png";
 
     #endregion
 
@@ -25,60 +28,131 @@ public static class Renderer
         // init the bitmap
         int[] sectionGrid = TrackSimulator.SimulateTrack(track);
 
-        int width = _tileSize * sectionGrid[0];
-        int height = _tileSize * sectionGrid[1];
+        int width = TileSize * sectionGrid[0];
+        int height = TileSize * sectionGrid[1];
 
-        Bitmap bmp = ImageLoader.GenerateBitmap(width, height);
-        Graphics graphics = Graphics.FromImage(bmp);
+        Bitmap? bmp = ImageLoader.GenerateBitmap(width, height);
+        Graphics graphics = Graphics.FromImage(bmp!);
 
         // start position to render from
         int x = sectionGrid[2];
         int y = sectionGrid[3];
         _direction = track.StartDirection;
 
-        // color the background
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
-                bmp.SetPixel(j, i, track.Background);
-            }
-        }
-
         // draw track sections
         foreach (Section section in track.Sections)
         {
-            string imageUrl = section.SectionType switch
+            string imageUrl;
+            switch (section.SectionType)
             {
-                SectionTypes.StartGrid => _trackStart,
-                SectionTypes.Finish => _trackFinish,
-                SectionTypes.Straight => _trackStraight,
-                SectionTypes.LeftCorner => _trackCorner,
-                SectionTypes.RightCorner => _trackCorner
-            };
+                case SectionTypes.StartGrid:
+                    imageUrl = TrackStart;
+                    break;
+                case SectionTypes.Finish:
+                    imageUrl = TrackFinish;
+                    break;
+                case SectionTypes.Straight:
+                    imageUrl = TrackStraight;
+                    break;
+                case SectionTypes.LeftCorner:
+                    imageUrl = TrackCornerLeft;
+                    break;
+                case SectionTypes.RightCorner:
+                    imageUrl = TrackCornerRight;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(section.SectionType));
+            }
 
-            Bitmap trackSection = ImageLoader.GetImageBitmap(imageUrl);
-            
+            Bitmap? trackImage = ImageLoader.GetImageBitmap(imageUrl);
+            Graphics trackGraphics = Graphics.FromImage(trackImage!);
+
+            // get section data for current section
+            SectionData sectionData = Data.CurrentRace.GetSectionData(section);
+
+            // draw the players, if any
+            if (sectionData.Left != null)
+            {
+                IParticipant player = sectionData.Left;
+                Bitmap? playerImage = ImageLoader.GetPlayer(player.TeamColor, section.SectionType);
+
+                if (player.Equipment.IsBroken)
+                {
+                    playerImage = ImageLoader.GetBrokenPlayer(section.SectionType);
+                }
+
+                if (section.SectionType == SectionTypes.LeftCorner)
+                {
+                    playerImage?.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                }
+
+                switch (section.SectionType)
+                {
+                    case SectionTypes.LeftCorner:
+                        trackGraphics.DrawImage(playerImage!, 0, 0, CarSize, CarSize);
+                        break;
+                    case SectionTypes.RightCorner:
+                        trackGraphics.DrawImage(playerImage!, CarSize / 2, CarSize / 2, CarSize, CarSize);
+                        break;
+                    case SectionTypes.Straight:
+                    case SectionTypes.StartGrid:
+                    case SectionTypes.Finish:
+                    default:
+                        trackGraphics.DrawImage(playerImage!, CarSize / 2, 0, CarSize, CarSize);
+                        break;
+                }
+            }
+
+            if (sectionData.Right != null)
+            {
+                IParticipant player = sectionData.Right;
+                Bitmap? playerImage = ImageLoader.GetPlayer(player.TeamColor, section.SectionType);
+
+                if (player.Equipment.IsBroken)
+                {
+                    playerImage = ImageLoader.GetBrokenPlayer(section.SectionType);
+                }
+
+                switch (section.SectionType)
+                {
+                    case SectionTypes.LeftCorner:
+                        playerImage?.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                        trackGraphics.DrawImage(playerImage!, CarSize / 2, CarSize / 2, CarSize, CarSize);
+                        break;
+                    case SectionTypes.RightCorner:
+                        trackGraphics.DrawImage(playerImage!, 0, CarSize, CarSize, CarSize);
+                        break;
+                    case SectionTypes.Straight:
+                    case SectionTypes.StartGrid:
+                    case SectionTypes.Finish:
+                    default:
+                        trackGraphics.DrawImage(playerImage!, CarSize / 2, CarSize, CarSize, CarSize);
+                        break;
+                }
+            }
+
             switch (_direction)
             {
                 case Direction.Up:
-                    trackSection.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    trackImage?.RotateFlip(RotateFlipType.Rotate270FlipNone);
                     break;
                 case Direction.Left:
-                    trackSection.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    trackImage?.RotateFlip(RotateFlipType.Rotate180FlipNone);
                     break;
                 case Direction.Down:
-                    trackSection.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    trackImage?.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     break;
                 case Direction.Right:
-                    trackSection.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                    trackImage?.RotateFlip(RotateFlipType.RotateNoneFlipNone);
                     break;
             }
-            
-            graphics.DrawImage(trackSection, x*_tileSize, y*_tileSize, _tileSize, _tileSize);
 
+            graphics.DrawImage(trackImage!, x * TileSize, y * TileSize, TileSize, TileSize);
+
+            // set direction for next track piece
             _direction = TrackSimulator.SimulateSection(section, _direction);
-            
+
+            // adjust the x & y coordinates
             switch (_direction)
             {
                 case Direction.Up:
@@ -97,6 +171,6 @@ public static class Renderer
         }
 
         // return full track
-        return ImageLoader.CreateBitmapSourceFromGdiBitmap(bmp);
+        return ImageLoader.CreateBitmapSourceFromGdiBitmap(bmp!);
     }
 }

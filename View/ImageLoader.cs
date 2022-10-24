@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Model;
 
 namespace View;
 
@@ -11,7 +12,7 @@ public static class ImageLoader
 {
     private static Dictionary<string, Bitmap> _images = new();
 
-    public static Bitmap GetImageBitmap(string url)
+    public static Bitmap? GetImageBitmap(string url)
     {
         if (!_images.ContainsKey(url))
         {
@@ -19,15 +20,15 @@ public static class ImageLoader
             _images.Add(url, bmp);
         }
 
-        return _images[url];
+        return _images[url].Clone() as Bitmap;
     }
 
     public static void ClearImages()
     {
         _images.Clear();
     }
-    
-    public static Bitmap GenerateBitmap(int width, int height)
+
+    public static Bitmap? GenerateBitmap(int width, int height)
     {
         if (!_images.ContainsKey("empty"))
         {
@@ -44,18 +45,18 @@ public static class ImageLoader
         {
             throw new ArgumentNullException("bitmap");
         }
-    
+
         Rectangle rect = new(0, 0, bitmap.Width, bitmap.Height);
-    
+
         BitmapData bitmapData = bitmap.LockBits(
             rect,
             ImageLockMode.ReadWrite,
             System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-    
+
         try
         {
             int size = rect.Width * rect.Height * 4;
-    
+
             return BitmapSource.Create(
                 bitmap.Width,
                 bitmap.Height,
@@ -71,5 +72,25 @@ public static class ImageLoader
         {
             bitmap.UnlockBits(bitmapData);
         }
+    }
+
+    public static Bitmap? GetPlayer(TeamColors tc, SectionTypes st)
+    {
+        if (st == SectionTypes.LeftCorner || st == SectionTypes.RightCorner)
+        {
+            return GetImageBitmap(@$".\Graphics\Scaled\Cars\Corner\car_{tc.ToString().ToLower()}.png");
+        }
+
+        return GetImageBitmap(@$".\Graphics\Scaled\Cars\Straight\car_{tc.ToString().ToLower()}.png");
+    }
+
+    public static Bitmap? GetBrokenPlayer(SectionTypes st)
+    {
+        if (st == SectionTypes.LeftCorner || st == SectionTypes.RightCorner)
+        {
+            return GetImageBitmap(@".\Graphics\Scaled\Cars\Corner\car_broken.png");
+        }
+
+        return GetImageBitmap(@".\Graphics\Scaled\Cars\Straight\car_broken.png");
     }
 }

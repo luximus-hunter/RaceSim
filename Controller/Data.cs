@@ -27,7 +27,7 @@ public static class Data
 
     private static void AddTracks()
     {
-        Competition.Tracks.Enqueue(new Track("Warmup Track", 1, 2, Direction.Left, Color.Green, new[]
+        Competition.Tracks.Enqueue(new Track("Warmup Track", 1, 2, Direction.Right, Color.Green, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
@@ -65,7 +65,7 @@ public static class Data
             SectionTypes.RightCorner,
         }));
 
-        Competition.Tracks.Enqueue(new Track("Bridge Track", 2, 2, Direction.Right, Color.SandyBrown, new[]
+        Competition.Tracks.Enqueue(new Track("Bridge Track", 2, 2, Direction.Right, Color.Goldenrod, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
@@ -111,7 +111,7 @@ public static class Data
             SectionTypes.RightCorner
         }));
 
-        Competition.Tracks.Enqueue(new Track("Baby Park", 8, 5, Direction.Left, Color.Red, new[]
+        Competition.Tracks.Enqueue(new Track("Baby Park", 8, 5, Direction.Left, Color.Maroon, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
@@ -134,8 +134,6 @@ public static class Data
 
         if (track == null)
         {
-            // Console.WriteLine("No more tracks");
-
             throw new Exception("No more tracks left.");
         }
 
@@ -144,6 +142,5 @@ public static class Data
         CurrentRace = new Race(track, Competition.Participants);
         CurrentRace.PlaceParticipants();
         CurrentRace.RandomizeEquipment();
-        CurrentRace.Start();
     }
 }

@@ -15,34 +15,55 @@ public static class TrackSimulator
         int yMax = y;
         int xMin = x;
         int yMin = y;
+        
+        // set start position
+        Direction direction = t.StartDirection;
 
         // find out grid size (in tiles)
         foreach (Section section in t.Sections)
         {
-            Direction direction = t.StartDirection;
-
             switch (section.SectionType)
             {
                 case SectionTypes.LeftCorner:
-                    direction = direction switch
+                    switch (direction)
                     {
-                        Direction.Up => Direction.Left,
-                        Direction.Left => Direction.Down,
-                        Direction.Down => Direction.Right,
-                        Direction.Right => Direction.Up,
-                        _ => direction
-                    };
+                        case Direction.Up:
+                            direction = Direction.Left;
+                            break;
+                        case Direction.Left:
+                            direction = Direction.Down;
+                            break;
+                        case Direction.Down:
+                            direction = Direction.Right;
+                            break;
+                        case Direction.Right:
+                            direction = Direction.Up;
+                            break;
+                        default:
+                            direction = direction;
+                            break;
+                    }
 
                     break;
                 case SectionTypes.RightCorner:
-                    direction = direction switch
+                    switch (direction)
                     {
-                        Direction.Up => Direction.Right,
-                        Direction.Left => Direction.Up,
-                        Direction.Down => Direction.Left,
-                        Direction.Right => Direction.Down,
-                        _ => direction
-                    };
+                        case Direction.Up:
+                            direction = Direction.Right;
+                            break;
+                        case Direction.Left:
+                            direction = Direction.Up;
+                            break;
+                        case Direction.Down:
+                            direction = Direction.Left;
+                            break;
+                        case Direction.Right:
+                            direction = Direction.Down;
+                            break;
+                        default:
+                            direction = direction;
+                            break;
+                    }
 
                     break;
             }
@@ -86,7 +107,7 @@ public static class TrackSimulator
 
         int xSize = xMax - xMin + 1;
         int ySize = yMax - yMin + 1;
-        
+
         int xStart = 3 - xMin;
         int yStart = 3 - yMin;
 
@@ -98,25 +119,39 @@ public static class TrackSimulator
         switch (s.SectionType)
         {
             case SectionTypes.LeftCorner:
-                d = d switch
+                switch (d)
                 {
-                    Direction.Up => Direction.Left,
-                    Direction.Left => Direction.Down,
-                    Direction.Down => Direction.Right,
-                    Direction.Right => Direction.Up,
-                    _ => d
-                };
+                    case Direction.Up:
+                        d = Direction.Left;
+                        break;
+                    case Direction.Left:
+                        d = Direction.Down;
+                        break;
+                    case Direction.Down:
+                        d = Direction.Right;
+                        break;
+                    case Direction.Right:
+                        d = Direction.Up;
+                        break;
+                }
 
                 break;
             case SectionTypes.RightCorner:
-                d = d switch
+                switch (d)
                 {
-                    Direction.Up => Direction.Right,
-                    Direction.Left => Direction.Up,
-                    Direction.Down => Direction.Left,
-                    Direction.Right => Direction.Down,
-                    _ => d
-                };
+                    case Direction.Up:
+                        d = Direction.Right;
+                        break;
+                    case Direction.Left:
+                        d = Direction.Up;
+                        break;
+                    case Direction.Down:
+                        d = Direction.Left;
+                        break;
+                    case Direction.Right:
+                        d = Direction.Down;
+                        break;
+                }
 
                 break;
         }

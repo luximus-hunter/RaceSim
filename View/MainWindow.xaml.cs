@@ -1,41 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using Controller;
 using Model;
 
 namespace View
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// <summary> Interaction logic for MainWindow.xaml </summary>
     public partial class MainWindow : Window
     {
+        private const string WindowTitle = "Windesheim RaceSim";
+        
         public MainWindow()
         {
             InitializeComponent();
-
             Data.Initialize();
-            Data.NextRace();
-
-            // Renderer.DrawTrack(Data.CurrentRace.Track);
-            Data.CurrentRace.DriversChanged += DriversChangedEventHandler;
-            // Data.CurrentRace.RaceEnded += RaceEndedEventHandler;
+            StartTrack();
         }
 
-        public void DriversChangedEventHandler(object sender, DriversChangedEventArgs e)
+        /// <summary> Render the track to the screen </summary>
+        private void Render()
         {
             TrackImage.Dispatcher.BeginInvoke(
                 DispatcherPriority.Render,
@@ -46,11 +31,68 @@ namespace View
                 }));
         }
 
+        /// <summary> Set the background color to the color of the track </summary>
+        /// <param name="sender"> Called object </param>
+        /// <param name="eventArgs"> Event arguments containing the color of the track </param>
+        private void RaceStartedEventHandler(object sender, RaceStartedEventArgs eventArgs)
+        {
+            Container.Dispatcher.BeginInvoke(
+                DispatcherPriority.Render,
+                new Action(() =>
+                {
+                    Color color = Color.FromArgb(eventArgs.Color.A, eventArgs.Color.R, eventArgs.Color.G,
+                        eventArgs.Color.B);
+                    Container.Background = new SolidColorBrush(color);
+                }));
+            
+            Window.Dispatcher.BeginInvoke(
+                DispatcherPriority.Render,
+                new Action(() =>
+                {
+                    Window.Title = $"{WindowTitle} - {eventArgs.Title}";
+                }));
+        }
+
+        /// <summary> Render the screen when the drivers change position </summary>
+        /// <param name="sender"> Called object </param>
+        /// <param name="eventArgs"> Event arguments </param>
+        private void DriversChangedEventHandler(object sender, DriversChangedEventArgs eventArgs)
+        {
+            Render();
+        }
+
+        /// <summary> Start up the new race when the old one ends </summary>
+        /// <param name="sender"> Called object </param>
+        /// <param name="eventArgs"> Event arguments </param>
         private void RaceEndedEventHandler(object sender, EventArgs eventArgs)
         {
+            StartTrack();
+        }
+
+        /// <summary> Gets, sets, and starts the next track </summary>
+        private void StartTrack()
+        {
+            ImageLoader.ClearImages();
             Data.NextRace();
-            Data.CurrentRace.DriversChanged += DriversChangedEventHandler;
-            Data.CurrentRace.RaceEnded += RaceEndedEventHandler;
+            Render();
+            Data.CurrentRace.RaceStarted += RaceStartedEventHandler!;
+            Data.CurrentRace.DriversChanged += DriversChangedEventHandler!;
+            Data.CurrentRace.UpdateScoreboard += UpdateScoreboardEventHandler!;
+            Data.CurrentRace.RaceEnded += RaceEndedEventHandler!;
+            Data.CurrentRace.Start();
+        }
+
+        /// <summary> Update the scoreboard when a player finishes </summary>
+        /// <param name="sender">Sender object</param>
+        /// <param name="eventArgs">Event arguments containing the scoreboard string</param>
+        private void UpdateScoreboardEventHandler(object sender, UpdateScoreboardEventArgs eventArgs)
+        {
+            Scoreboard.Dispatcher.BeginInvoke(
+                DispatcherPriority.Render,
+                new Action(() =>
+                {
+                    Scoreboard.Text = eventArgs.ScoreboardString;
+                }));
         }
     }
 }

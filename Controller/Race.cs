@@ -1,5 +1,6 @@
 ﻿using Model;
 using System.Timers;
+using View;
 using Timer = System.Timers.Timer;
 
 namespace Controller;
@@ -7,45 +8,49 @@ namespace Controller;
 public class Race
 {
     public Track Track { get; }
-    public List<IParticipant> Participants { get; }
-    public Dictionary<Section, SectionData> Positions { get; }
 
-    public Timer Timer;
+    private readonly List<IParticipant> _participants;
+    private readonly Dictionary<Section, SectionData> _positions;
+    private readonly Timer _timer;
     private readonly Random _random;
     private readonly Dictionary<IParticipant, int> _roundsCompleted;
     private bool _loadingNextTrack;
+    private int _points;
 
+    public event EventHandler<RaceStartedEventArgs> RaceStarted;
     public event EventHandler<DriversChangedEventArgs> DriversChanged;
+    public event EventHandler<UpdateScoreboardEventArgs> UpdateScoreboard;
     public event EventHandler<EventArgs> RaceEnded;
 
     public Race(Track track, List<IParticipant> participants)
     {
         Track = track;
-        Participants = participants;
+        _participants = participants;
+        _points = _participants.Count - 1;
 
-        Timer = new Timer(200);
-        Timer.Elapsed += OnTimedEvent;
-        Timer.AutoReset = true;
+        _timer = new Timer(500);
+        _timer.Elapsed += OnTimedEvent;
+        _timer.AutoReset = true;
 
         _random = new Random(DateTime.Now.Millisecond);
         _roundsCompleted = new Dictionary<IParticipant, int>();
         _loadingNextTrack = false;
 
-        Positions = new Dictionary<Section, SectionData>();
+        _positions = new Dictionary<Section, SectionData>();
         foreach (Section section in track.Sections)
         {
-            Positions.Add(section, new SectionData());
+            _positions.Add(section, new SectionData());
         }
     }
 
-    private SectionData GetSectionData(Section section)
+    public SectionData GetSectionData(Section section)
     {
-        SectionData value = Positions.GetValueOrDefault(section, null);
+        SectionData value = _positions.GetValueOrDefault(section, null);
 
         if (value == null)
         {
             value = new SectionData();
-            Positions.Add(section, value);
+            _positions.Add(section, value);
         }
 
         return value;
@@ -53,15 +58,15 @@ public class Race
 
     public void RandomizeEquipment()
     {
-        for (int i = 0; i < Participants.Count; i++)
+        for (int i = 0; i < _participants.Count; i++)
         {
-            IParticipant participant = Participants[i];
+            IParticipant participant = _participants[i];
 
             participant.Equipment.Speed = _random.Next(7, 10);
             participant.Equipment.Performance = _random.Next(6, 10);
             participant.Equipment.Quality = _random.Next(50, 100);
 
-            Participants[i] = participant;
+            _participants[i] = participant;
         }
     }
 
@@ -105,27 +110,27 @@ public class Race
             throw new Exception("Start positions were found in the middle of the track");
         }
 
-        if (Data.CurrentRace.Participants.Count > startGrids * 2)
+        if (Data.CurrentRace._participants.Count > startGrids * 2)
         {
             throw new Exception("Too many drivers for track");
         }
 
         #endregion
 
-        int driversToPlace = Participants.Count;
+        int driversToPlace = _participants.Count;
         int driversPlaced = 0;
 
         for (int index = startGrids - 1; index >= 0; index--)
         {
             if (driversToPlace > 0)
             {
-                Positions[Track.Sections.ElementAt(index)].Left = Participants[driversPlaced];
+                _positions[Track.Sections.ElementAt(index)].Left = _participants[driversPlaced];
                 driversPlaced++;
                 driversToPlace--;
 
                 if (driversToPlace > 0)
                 {
-                    Positions[Track.Sections.ElementAt(index)].Right = Participants[driversPlaced];
+                    _positions[Track.Sections.ElementAt(index)].Right = _participants[driversPlaced];
                     driversPlaced++;
                     driversToPlace--;
                 }
@@ -143,23 +148,13 @@ public class Race
             // get current and next section
             Section section = Track.Sections.ElementAt(index);
             SectionData sectionData = GetSectionData(section);
-            Section nextSection;
-
-            try
-            {
-                nextSection = Track.Sections.ElementAt(index + 1);
-            }
-            catch (Exception)
-            {
-                nextSection = Track.Sections.ElementAt(0);
-            }
-
+            Section nextSection = index + 1 >= Track.Sections.Count
+                ? Track.Sections.ElementAt(0)
+                : Track.Sections.ElementAt(index + 1);
             SectionData nextSectionData = GetSectionData(nextSection);
 
             if (sectionData.Left != null)
             {
-                // int driverCode = sectionData.Left.GetHashCode();
-
                 // add driven distance
                 int passedDistance = sectionData.Left.Equipment.Distance();
                 sectionData.DistanceLeft += passedDistance;
@@ -194,7 +189,12 @@ public class Race
                         if (_roundsCompleted.ContainsKey(sectionData.Left) &&
                             _roundsCompleted[sectionData.Left] == Track.Laps)
                         {
+                            sectionData.Left.Points += _points;
+                            _points--;
+
                             sectionData.Left = null;
+
+                            UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
                         }
                         else
                         {
@@ -229,7 +229,12 @@ public class Race
                         if (_roundsCompleted.ContainsKey(sectionData.Left) &&
                             _roundsCompleted[sectionData.Left] == Track.Laps)
                         {
+                            sectionData.Left.Points += _points;
+                            _points--;
+
                             sectionData.Left = null;
+
+                            UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
                         }
                         else
                         {
@@ -257,8 +262,6 @@ public class Race
             }
             else if (sectionData.Right != null)
             {
-                // int driverCode = sectionData.Right.GetHashCode();
-
                 // add driven distance
                 int passedDistance = sectionData.Right.Equipment.Distance();
                 sectionData.DistanceRight += passedDistance;
@@ -293,7 +296,12 @@ public class Race
                         if (_roundsCompleted.ContainsKey(sectionData.Right) &&
                             _roundsCompleted[sectionData.Right] == Track.Laps)
                         {
+                            sectionData.Right.Points += _points;
+                            _points--;
+
                             sectionData.Right = null;
+
+                            UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
                         }
                         else
                         {
@@ -328,7 +336,12 @@ public class Race
                         if (_roundsCompleted.ContainsKey(sectionData.Right) &&
                             _roundsCompleted[sectionData.Right] == Track.Laps)
                         {
+                            sectionData.Right.Points += _points;
+                            _points--;
+
                             sectionData.Right = null;
+
+                            UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
                         }
                         else
                         {
@@ -358,7 +371,7 @@ public class Race
 
         if (render)
         {
-            DriversChanged.Invoke(this, new DriversChangedEventArgs(Track));
+            DriversChanged?.Invoke(this, new DriversChangedEventArgs(Track));
         }
 
         // TODO: fix this ⬇ garbage, it works for now...
@@ -372,7 +385,7 @@ public class Race
             }
         }
 
-        if (_roundsCompleted.Count != Participants.Count)
+        if (_roundsCompleted.Count != _participants.Count)
         {
             nextTrack = false;
         }
@@ -380,19 +393,23 @@ public class Race
         if (nextTrack && _loadingNextTrack == false)
         {
             _loadingNextTrack = true;
-            RaceEnded.Invoke(this, EventArgs.Empty);
+            RaceEnded?.Invoke(this, EventArgs.Empty);
         }
         // TODO: end of ⬆ that garbage
     }
 
     public void Start()
     {
-        Timer.Start();
+        RaceStarted?.Invoke(this, new RaceStartedEventArgs(Track));
+        UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
+
+        _timer.Start();
     }
 
     public void Stop()
     {
-        Timer.Stop();
+        _timer.Stop();
+
         DriversChanged = null;
     }
 }
