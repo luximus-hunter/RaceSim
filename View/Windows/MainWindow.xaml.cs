@@ -89,11 +89,6 @@ namespace View.Windows
             Application.Current.Shutdown();
         }
 
-        private void WindowLoaded(object sender, RoutedEventArgs e)
-        {
-            // ScoreboardWindow.Show();
-        }
-
         private void MenuItemTrackStatsClick(object sender, RoutedEventArgs e)
         {
             TrackStatsWindow.Show();
