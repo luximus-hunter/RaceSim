@@ -278,7 +278,7 @@ public static class Visualisation
         {
             for (int j = 0; j < _canvas.Width; j++)
             {
-                // _canvas.SetPixel(j, i, Data.CurrentRace.Track.Background);
+                 _canvas.SetPixel(j, i, Data.CurrentRace.Track.Background);
             }
         }
 
@@ -355,7 +355,7 @@ public static class Visualisation
     {
         string[] tile = new string[_tileSize];
 
-        #region tile selector
+         #region tile selector
 
         switch (section.SectionType)
         {
@@ -477,7 +477,7 @@ public static class Visualisation
                         break;
                     // broken driver
                     case '#':
-                        color = Color.DarkSlateGray1;
+                        color = Color.Grey15;
                         break;
                     // drivers
                     case 'w':
@@ -502,7 +502,7 @@ public static class Visualisation
                         color = Color.Pink1;
                         break;
                     case 'e':
-                        color = Color.DarkSlateGray3;
+                        color = Color.Grey23;
                         break;
                     case 's':
                         color = Color.Silver;
@@ -530,7 +530,7 @@ public static class Visualisation
                         break;
                     // road
                     default:
-                        color = Color.DarkSlateGray1;
+                        color = Color.Grey3;
                         break;
                 }
 
