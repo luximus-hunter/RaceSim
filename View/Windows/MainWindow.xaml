@@ -1,0 +1,35 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="clr-namespace:Controller;assembly=Controller"
+    x:Class="View.Windows.TrackWindow"
+    mc:Ignorable="d"
+    Height="800"
+    Width="1200"
+    x:Name="MainWindow"
+    Closed="WindowClosed"
+    Loaded="WindowLoaded"
+    Title="Windesheim RaceSim"
+    Icon="/Windows/track.png">
+    <Window.DataContext>
+        <c:DataContext />
+    </Window.DataContext>
+    <Grid x:Name="Container">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top"
+                  Height="20"
+                  VerticalAlignment="Top">
+                <MenuItem Header="Window">
+                    <MenuItem Header="Track statistics" Click="MenuItemTrackStatsClick" IsCheckable="True" />
+                    <MenuItem Header="Competition statistics" Click="MenuItemCompetitionStatsClick" />
+                    <MenuItem Header="Close all windows" Click="MenuItemExitClick" />
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Image x:Name="TrackImage" HorizontalAlignment="Left" Margin="10 30 10 10" VerticalAlignment="Top" />
+        <Label VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10 20 10 10"
+               Content="{Binding Path=TrackName}" />
+    </Grid>
+</Window>

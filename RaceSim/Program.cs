@@ -15,7 +15,7 @@ internal static class Program
         Data.CurrentRace.DriversChanged += Visualisation.DriversChangedEventHandler;
         Data.CurrentRace.RaceEnded += RaceEndedEventHandler;
 
-        while (Data.CurrentRace.Participants.Count > 0)
+        while (Data.Competition.Participants.Count > 0)
         {
             for (;;)
             {

@@ -61,7 +61,7 @@ public static class Renderer
                     imageUrl = TrackCornerRight;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(section.SectionType));
+                    throw new ArgumentOutOfRangeException();
             }
 
             Bitmap? trackImage = ImageLoader.GetImageBitmap(imageUrl);
@@ -145,6 +145,8 @@ public static class Renderer
                 case Direction.Right:
                     trackImage?.RotateFlip(RotateFlipType.RotateNoneFlipNone);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             graphics.DrawImage(trackImage!, x * TileSize, y * TileSize, TileSize, TileSize);

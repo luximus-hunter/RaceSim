@@ -1,0 +1,24 @@
+<Window x:Class="View.Windows.TrackStats"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:c="clr-namespace:Controller;assembly=Controller"
+        mc:Ignorable="d"
+        Title="TrackStats" Height="450" Width="250"
+        Closing="OnClosing"
+        ResizeMode="NoResize"
+        Icon="/Windows/scoreboard.png">
+    <Window.DataContext>
+        <c:DataContext />
+    </Window.DataContext>
+    <Grid>
+        <ListView ItemsSource="{Binding Path=TrackSections}">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=SectionTypeName}" Header="Track sections" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

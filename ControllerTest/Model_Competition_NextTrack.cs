@@ -46,7 +46,7 @@ public class Model_Competition_NextTrack
             SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
             SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
         };
-        Track track = new Track("Track 1", 1, 1, Direction.Right, Color.Green, t);
+        Track track = new("Track 1", 1, 1, Direction.Right, Color.Green, t);
 
         _competition.Tracks.Enqueue(track);
 
@@ -64,8 +64,8 @@ public class Model_Competition_NextTrack
             SectionTypes.StartGrid, SectionTypes.Finish, SectionTypes.RightCorner, SectionTypes.RightCorner,
             SectionTypes.Straight, SectionTypes.Straight, SectionTypes.RightCorner, SectionTypes.RightCorner
         };
-        Track track1 = new Track("Track 1", 1, 1, Direction.Right, Color.Green, t);
-        Track track2 = new Track("Track 2", 1, 1, Direction.Right, Color.Green, t);
+        Track track1 = new("Track 1", 1, 1, Direction.Right, Color.Green, t);
+        Track track2 = new("Track 2", 1, 1, Direction.Right, Color.Green, t);
 
         _competition.Tracks.Enqueue(track1);
         _competition.Tracks.Enqueue(track2);

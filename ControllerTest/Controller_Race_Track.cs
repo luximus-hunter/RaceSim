@@ -31,6 +31,6 @@ public class Controller_Race_Track
     [Test]
     public void Track_Creation()
     {
-        Assert.That(_r.Track == _t);
+        Assert.That(_r.Track, Is.EqualTo(_t));
     }
 }

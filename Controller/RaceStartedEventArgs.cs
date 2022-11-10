@@ -1,8 +1,7 @@
-using System;
 using System.Drawing;
 using Model;
 
-namespace View;
+namespace Controller;
 
 public class RaceStartedEventArgs : EventArgs
 {

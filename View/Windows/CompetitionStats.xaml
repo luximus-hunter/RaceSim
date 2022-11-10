@@ -1,0 +1,34 @@
+<Window x:Class="View.Windows.CompetitionStats"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:c="clr-namespace:Controller;assembly=Controller"
+        mc:Ignorable="d"
+        Title="CompetitionStats" Height="400" Width="250"
+        Closing="OnClosing"
+        ResizeMode="NoResize"
+        Icon="/Windows/scoreboard.png">
+    <Window.DataContext>
+        <c:DataContext />
+    </Window.DataContext>
+    <Grid>
+        <ListView ItemsSource="{Binding Path=Participants}" VerticalAlignment="Top" Margin="0" Height="200">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Color}" Header="Color" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Points}" Header="Points" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView ItemsSource="{Binding Path=Tracks}" VerticalAlignment="Top" Margin="0 200 0 0" Height="200">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Tracks" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Laps}" Header="Laps" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

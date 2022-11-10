@@ -7,6 +7,7 @@ public class Driver : IParticipant
     public IEquipment Equipment { get; set; }
     public TeamColors TeamColor { get; set; }
     public int Section { get; set; }
+    public string Color => TeamColor.ToString();
 
     public Driver(string name, IEquipment equipment, TeamColors teamColor)
     {

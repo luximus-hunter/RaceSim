@@ -1,11 +1,13 @@
 ﻿using System.Drawing;
+// using Spectre.Console;
+
 using Model;
 
 namespace Controller;
 
 public static class Data
 {
-    private static Competition Competition { get; set; }
+    public static Competition Competition { get; private set; }
     public static Race CurrentRace { get; private set; }
 
     public static void Initialize()
@@ -27,7 +29,7 @@ public static class Data
 
     private static void AddTracks()
     {
-        Competition.Tracks.Enqueue(new Track("Warmup Track", 1, 2, Direction.Right, Color.Green, new[]
+        Competition.Tracks.Enqueue(new Track("Warmup Track", 2, 2, Direction.Right, Color.Green, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
@@ -65,7 +67,7 @@ public static class Data
             SectionTypes.RightCorner,
         }));
 
-        Competition.Tracks.Enqueue(new Track("Bridge Track", 2, 2, Direction.Right, Color.Goldenrod, new[]
+        Competition.Tracks.Enqueue(new Track("Bridge Track", 3, 2, Direction.Right, Color.Goldenrod, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
@@ -136,11 +138,12 @@ public static class Data
         {
             throw new Exception("No more tracks left.");
         }
-
+        
         CurrentRace?.Stop();
 
         CurrentRace = new Race(track, Competition.Participants);
-        CurrentRace.PlaceParticipants();
-        CurrentRace.RandomizeEquipment();
+
+        CurrentRace?.PlaceParticipants();
+        CurrentRace?.RandomizeEquipment();
     }
 }

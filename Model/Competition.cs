@@ -20,4 +20,6 @@ public class Competition
 
         return null;
     }
+
+    public List<IParticipant> GetParticipants => Participants.OrderByDescending(participant => participant.Points).ToList();
 }

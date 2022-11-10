@@ -1,6 +1,5 @@
 ﻿using Model;
 using System.Timers;
-using View;
 using Timer = System.Timers.Timer;
 
 namespace Controller;
@@ -374,7 +373,6 @@ public class Race
             DriversChanged?.Invoke(this, new DriversChangedEventArgs(Track));
         }
 
-        // TODO: fix this ⬇ garbage, it works for now...
         bool nextTrack = true;
 
         for (int i = 0; i < Track.Laps; i++)
@@ -395,7 +393,6 @@ public class Race
             _loadingNextTrack = true;
             RaceEnded?.Invoke(this, EventArgs.Empty);
         }
-        // TODO: end of ⬆ that garbage
     }
 
     public void Start()

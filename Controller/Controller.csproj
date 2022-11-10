@@ -13,4 +13,10 @@
     <PackageReference Include="Spectre.Console" Version="0.45.1-preview.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="PresentationCore">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\6.0.10\PresentationCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

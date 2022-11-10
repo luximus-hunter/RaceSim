@@ -27,6 +27,7 @@
       <None Remove="Graphics\Scaled\Cars\car_white.png" />
       <None Remove="Graphics\Scaled\Cars\car_yellow.png" />
       <None Remove="Graphics\Scaled\Track\track_corner_left.png" />
+      <None Remove="Windows\track.png" />
       <Content Include="Graphics\Scaled\Track\track_corner_left.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
@@ -205,6 +206,8 @@
       <Content Include="Graphics\Scaled\Cars\Corner\car_yellow.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="scoreboard.png" />
+      <None Remove="track.png" />
     </ItemGroup>
 
     <ItemGroup>
@@ -217,10 +220,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Resource Include="logo.png" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="Graphics\OG\**" />
     </ItemGroup>
 
@@ -230,6 +229,12 @@
 
     <ItemGroup>
       <Page Remove="Graphics\OG\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Windows\track.png" />
+      <None Remove="Windows\scoreboard.png" />
+      <Resource Include="Windows\scoreboard.png" />
     </ItemGroup>
 
 </Project>

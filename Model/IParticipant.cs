@@ -6,6 +6,7 @@ public interface IParticipant
     public int Points { get; set; }
     public IEquipment Equipment { get; }
     public TeamColors TeamColor { get; }
+    public string Color => TeamColor.ToString();
     public int Section { get; set; }
 
     public void AddPoint();

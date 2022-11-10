@@ -2,8 +2,9 @@
 
 public class Section
 {
-    public static int SectionLength { get; } = 100;
-    public SectionTypes SectionType { get; private set; }
+    public static int SectionLength => 100;
+    public SectionTypes SectionType { get; }
+    public string SectionTypeName => SectionType.ToString();
 
     public Section(SectionTypes sectionType)
     {

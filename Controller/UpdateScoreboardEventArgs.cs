@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Model;
 
-namespace View;
+namespace Controller;
 
 public class UpdateScoreboardEventArgs : EventArgs
 {

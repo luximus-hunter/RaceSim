@@ -1,7 +1,7 @@
 ﻿using Controller;
 using Model;
 using Spectre.Console;
-using Color = System.Drawing.Color;
+// using System.Drawing;
 
 namespace RaceSim;
 
@@ -440,8 +440,8 @@ public static class Visualisation
 
         #endregion
 
-        tile = InsertParticipantsInGraphic(tile, Data.CurrentRace.Positions[section].Left,
-            Data.CurrentRace.Positions[section].Right);
+        tile = InsertParticipantsInGraphic(tile, Data.CurrentRace.GetSectionData(section).Left,
+            Data.CurrentRace.GetSectionData(section).Right);
 
         for (int i = 0; i < tile.Length; i++)
         {
@@ -477,20 +477,20 @@ public static class Visualisation
                         break;
                     // broken driver
                     case '#':
-                        color = Color.Gray;
+                        color = Color.DarkSlateGray1;
                         break;
                     // drivers
                     case 'w':
                         color = Color.White;
                         break;
                     case 'o':
-                        color = Color.Orange;
+                        color = Color.Orange1;
                         break;
                     case 'm':
-                        color = Color.Magenta;
+                        color = Color.Magenta1;
                         break;
                     case 'k':
-                        color = Color.LightBlue;
+                        color = Color.LightSkyBlue1;
                         break;
                     case 'y':
                         color = Color.Yellow;
@@ -499,16 +499,16 @@ public static class Visualisation
                         color = Color.Lime;
                         break;
                     case 'p':
-                        color = Color.Pink;
+                        color = Color.Pink1;
                         break;
                     case 'e':
-                        color = Color.Gray;
+                        color = Color.DarkSlateGray3;
                         break;
                     case 's':
                         color = Color.Silver;
                         break;
                     case 'c':
-                        color = Color.Cyan;
+                        color = Color.Cyan1;
                         break;
                     case 'u':
                         color = Color.Purple;
@@ -530,7 +530,7 @@ public static class Visualisation
                         break;
                     // road
                     default:
-                        color = Color.DarkSlateGray;
+                        color = Color.DarkSlateGray1;
                         break;
                 }
 
@@ -538,7 +538,7 @@ public static class Visualisation
 
                 if (c != 'x')
                 {
-                    // _canvas.SetPixel(relX, relY, color);
+                    _canvas.SetPixel(relX, relY, color);
                 }
             }
         }

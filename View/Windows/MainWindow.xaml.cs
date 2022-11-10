@@ -5,17 +5,20 @@ using System.Windows.Threading;
 using Controller;
 using Model;
 
-namespace View
+namespace View.Windows
 {
     /// <summary> Interaction logic for MainWindow.xaml </summary>
-    public partial class TrackWindow : Window
+    public partial class TrackWindow
     {
-        private const string WindowTitle = "Windesheim RaceSim";
-        
+        // private static readonly ScoreboardWindow ScoreboardWindow = new();
+        private static readonly TrackStats TrackStatsWindow = new();
+        private static readonly CompetitionStats CompetitionStatsWindow = new();
+
         public TrackWindow()
         {
-            InitializeComponent();
             Data.Initialize();
+            LoadTrack();
+            InitializeComponent();
             StartTrack();
         }
 
@@ -44,13 +47,6 @@ namespace View
                         eventArgs.Color.B);
                     Container.Background = new SolidColorBrush(color);
                 }));
-            
-            Window.Dispatcher.BeginInvoke(
-                DispatcherPriority.Render,
-                new Action(() =>
-                {
-                    Window.Title = $"{WindowTitle} - {eventArgs.Title}";
-                }));
         }
 
         /// <summary> Render the screen when the drivers change position </summary>
@@ -66,33 +62,51 @@ namespace View
         /// <param name="eventArgs"> Event arguments </param>
         private void RaceEndedEventHandler(object sender, EventArgs eventArgs)
         {
+            LoadTrack();
             StartTrack();
+        }
+
+        private void LoadTrack()
+        {
+            ImageLoader.ClearImages();
+            Data.NextRace();
         }
 
         /// <summary> Gets, sets, and starts the next track </summary>
         private void StartTrack()
         {
-            ImageLoader.ClearImages();
-            Data.NextRace();
             Render();
             Data.CurrentRace.RaceStarted += RaceStartedEventHandler!;
             Data.CurrentRace.DriversChanged += DriversChangedEventHandler!;
-            Data.CurrentRace.UpdateScoreboard += UpdateScoreboardEventHandler!;
             Data.CurrentRace.RaceEnded += RaceEndedEventHandler!;
+            // Data.CurrentRace.UpdateScoreboard += ScoreboardWindow.UpdateScoreboardEventHandler;
+
             Data.CurrentRace.Start();
         }
 
-        /// <summary> Update the scoreboard when a player finishes </summary>
-        /// <param name="sender">Sender object</param>
-        /// <param name="eventArgs">Event arguments containing the scoreboard string</param>
-        private void UpdateScoreboardEventHandler(object sender, UpdateScoreboardEventArgs eventArgs)
+        private void WindowClosed(object? sender, EventArgs e)
         {
-            Scoreboard.Dispatcher.BeginInvoke(
-                DispatcherPriority.Render,
-                new Action(() =>
-                {
-                    Scoreboard.Text = eventArgs.ScoreboardString;
-                }));
+            Application.Current.Shutdown();
+        }
+
+        private void WindowLoaded(object sender, RoutedEventArgs e)
+        {
+            // ScoreboardWindow.Show();
+        }
+
+        private void MenuItemTrackStatsClick(object sender, RoutedEventArgs e)
+        {
+            TrackStatsWindow.Show();
+        }
+
+        private void MenuItemCompetitionStatsClick(object sender, RoutedEventArgs e)
+        {
+            CompetitionStatsWindow.Show();
+        }
+
+        private void MenuItemExitClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
