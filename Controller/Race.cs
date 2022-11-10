@@ -18,7 +18,6 @@ public class Race
 
     public event EventHandler<RaceStartedEventArgs> RaceStarted;
     public event EventHandler<DriversChangedEventArgs> DriversChanged;
-    public event EventHandler<UpdateScoreboardEventArgs> UpdateScoreboard;
     public event EventHandler<EventArgs> RaceEnded;
 
     public Race(Track track, List<IParticipant> participants)
@@ -192,8 +191,6 @@ public class Race
                             _points--;
 
                             sectionData.Left = null;
-
-                            UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
                         }
                         else
                         {
@@ -232,8 +229,6 @@ public class Race
                             _points--;
 
                             sectionData.Left = null;
-
-                            UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
                         }
                         else
                         {
@@ -299,8 +294,6 @@ public class Race
                             _points--;
 
                             sectionData.Right = null;
-
-                            UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
                         }
                         else
                         {
@@ -339,8 +332,6 @@ public class Race
                             _points--;
 
                             sectionData.Right = null;
-
-                            UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
                         }
                         else
                         {
@@ -398,7 +389,6 @@ public class Race
     public void Start()
     {
         RaceStarted?.Invoke(this, new RaceStartedEventArgs(Track));
-        UpdateScoreboard?.Invoke(this, new UpdateScoreboardEventArgs(_participants));
 
         _timer.Start();
     }
