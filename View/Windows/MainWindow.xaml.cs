@@ -43,9 +43,9 @@ namespace View.Windows
                 DispatcherPriority.Render,
                 new Action(() =>
                 {
-                    Color color = Color.FromArgb(eventArgs.Color.A, eventArgs.Color.R, eventArgs.Color.G,
-                        eventArgs.Color.B);
-                    Container.Background = new SolidColorBrush(color);
+                    // Color color = Color.FromArgb(eventArgs.Color.A, eventArgs.Color.R, eventArgs.Color.G,
+                    //     eventArgs.Color.B);
+                    // Container.Background = new SolidColorBrush(color);
                 }));
         }
 
@@ -87,11 +87,6 @@ namespace View.Windows
         private void WindowClosed(object? sender, EventArgs e)
         {
             Application.Current.Shutdown();
-        }
-
-        private void WindowLoaded(object sender, RoutedEventArgs e)
-        {
-            // ScoreboardWindow.Show();
         }
 
         private void MenuItemTrackStatsClick(object sender, RoutedEventArgs e)

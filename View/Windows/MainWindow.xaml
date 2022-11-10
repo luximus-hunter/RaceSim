@@ -10,7 +10,6 @@
     Width="1200"
     x:Name="MainWindow"
     Closed="WindowClosed"
-    Loaded="WindowLoaded"
     Title="Windesheim RaceSim"
     Icon="/Windows/track.png">
     <Window.DataContext>

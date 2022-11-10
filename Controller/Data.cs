@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-// using Spectre.Console;
+﻿// using System.Drawing;
+using Spectre.Console;
 
 using Model;
 
@@ -29,7 +29,7 @@ public static class Data
 
     private static void AddTracks()
     {
-        Competition.Tracks.Enqueue(new Track("Warmup Track", 2, 2, Direction.Right, Color.Green, new[]
+        Competition.Tracks.Enqueue(new Track("Warmup Track", 2, 2, Direction.Right, Color.Green1, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
@@ -67,7 +67,7 @@ public static class Data
             SectionTypes.RightCorner,
         }));
 
-        Competition.Tracks.Enqueue(new Track("Bridge Track", 3, 2, Direction.Right, Color.Goldenrod, new[]
+        Competition.Tracks.Enqueue(new Track("Bridge Track", 3, 2, Direction.Right, Color.Gold1, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
