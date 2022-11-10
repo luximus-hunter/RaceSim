@@ -26,7 +26,7 @@ public class Race
         _participants = participants;
         _points = _participants.Count - 1;
 
-        _timer = new Timer(500);
+        _timer = new Timer(200);
         _timer.Elapsed += OnTimedEvent;
         _timer.AutoReset = true;
 

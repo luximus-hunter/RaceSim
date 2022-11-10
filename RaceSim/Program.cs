@@ -30,5 +30,6 @@ internal static class Program
         Data.CurrentRace.DriversChanged += Visualisation.DriversChangedEventHandler;
         Data.CurrentRace.RaceEnded += RaceEndedEventHandler;
         Visualisation.Initialize();
+        Data.CurrentRace.Start();
     }
 }
