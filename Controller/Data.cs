@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 // using Spectre.Console;
-
 using Model;
 
 namespace Controller;
@@ -29,7 +28,7 @@ public static class Data
 
     private static void AddTracks()
     {
-        Competition.Tracks.Enqueue(new Track("Warmup Track", 2, 2, Direction.Right, Color.Green, new[]
+        Competition.Tracks.Enqueue(new Track("Plains Track", 2, 2, Direction.Right, Color.Green, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
@@ -63,69 +62,45 @@ public static class Data
             SectionTypes.Straight,
             SectionTypes.RightCorner,
             SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.RightCorner,
-        }));
-
-        Competition.Tracks.Enqueue(new Track("Bridge Track", 3, 2, Direction.Right, Color.Goldenrod, new[]
-        {
-            SectionTypes.StartGrid,
-            SectionTypes.StartGrid,
-            SectionTypes.StartGrid,
-            SectionTypes.StartGrid,
-            SectionTypes.StartGrid,
-            SectionTypes.StartGrid,
-            SectionTypes.StartGrid,
-            SectionTypes.StartGrid,
-            SectionTypes.Finish,
-            SectionTypes.Straight,
-            SectionTypes.RightCorner,
-            SectionTypes.RightCorner,
-            SectionTypes.RightCorner,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.RightCorner,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.RightCorner,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.RightCorner,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.RightCorner,
-            SectionTypes.LeftCorner,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.LeftCorner,
-            SectionTypes.RightCorner,
-            SectionTypes.Straight,
-            SectionTypes.RightCorner,
-            SectionTypes.LeftCorner,
-            SectionTypes.Straight,
-            SectionTypes.Straight,
-            SectionTypes.RightCorner,
             SectionTypes.Straight,
             SectionTypes.RightCorner
         }));
 
-        Competition.Tracks.Enqueue(new Track("Baby Park", 8, 5, Direction.Left, Color.Maroon, new[]
+        Competition.Tracks.Enqueue(new Track("Dessert Track", 3, 2, Direction.Right, Color.Goldenrod, new[]
         {
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
             SectionTypes.StartGrid,
+            SectionTypes.StartGrid,
             SectionTypes.Finish,
+            SectionTypes.Straight,
+            SectionTypes.RightCorner,
             SectionTypes.RightCorner,
             SectionTypes.RightCorner,
             SectionTypes.Straight,
             SectionTypes.Straight,
+            SectionTypes.RightCorner,
             SectionTypes.Straight,
             SectionTypes.Straight,
             SectionTypes.RightCorner,
+            SectionTypes.Straight,
+            SectionTypes.Straight,
+            SectionTypes.Straight,
+            SectionTypes.Straight,
+            SectionTypes.RightCorner,
+            SectionTypes.Straight,
+            SectionTypes.Straight,
+            SectionTypes.Straight,
+            SectionTypes.Straight,
+            SectionTypes.RightCorner,
+            SectionTypes.LeftCorner,
+            SectionTypes.LeftCorner,
+            SectionTypes.RightCorner,
+            SectionTypes.RightCorner,
+            SectionTypes.LeftCorner,
+            SectionTypes.Straight,
+            SectionTypes.RightCorner,
+            SectionTypes.Straight,
             SectionTypes.RightCorner
         }));
     }
@@ -138,7 +113,7 @@ public static class Data
         {
             throw new Exception("No more tracks left.");
         }
-        
+
         CurrentRace?.Stop();
 
         CurrentRace = new Race(track, Competition.Participants);

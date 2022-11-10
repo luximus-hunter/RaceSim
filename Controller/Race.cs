@@ -24,9 +24,9 @@ public class Race
     {
         Track = track;
         _participants = participants;
-        _points = _participants.Count - 1;
+        _points = _participants.Count;
 
-        _timer = new Timer(500);
+        _timer = new Timer(400);
         _timer.Elapsed += OnTimedEvent;
         _timer.AutoReset = true;
 
@@ -60,9 +60,9 @@ public class Race
         {
             IParticipant participant = _participants[i];
 
-            participant.Equipment.Speed = _random.Next(7, 10);
-            participant.Equipment.Performance = _random.Next(6, 10);
-            participant.Equipment.Quality = _random.Next(50, 100);
+            participant.Equipment.Speed = _random.Next(8, 10);
+            participant.Equipment.Performance = _random.Next(8, 10);
+            participant.Equipment.Quality = _random.Next(90, 100);
 
             _participants[i] = participant;
         }

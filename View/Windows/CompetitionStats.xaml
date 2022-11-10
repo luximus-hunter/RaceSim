@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:c="clr-namespace:Controller;assembly=Controller"
         mc:Ignorable="d"
-        Title="CompetitionStats" Height="400" Width="250"
+        Title="CompetitionStats" Height="400" Width="400"
         Closing="OnClosing"
         ResizeMode="NoResize"
         Icon="/Windows/scoreboard.png">
@@ -19,6 +19,9 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Color}" Header="Color" />
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Points}" Header="Points" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Equipment.Speed}" Header="Speed" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Equipment.Quality}" Header="Quality" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Equipment.Performance}" Header="Performance" />
                 </GridView>
             </ListView.View>
         </ListView>
